@@ -59,3 +59,66 @@ footer p+p{margin-top:.8rem}
 .chips button.on{border-color:#ff7b00;background:#2a1200;box-shadow:0 0 10px rgba(255,120,0,.5)}
 .controls .cta{justify-content:flex-start}
 @media(max-width:760px){.carver{grid-template-columns:1fr}}
+/* ===== v4 features ===== */
+.demo-banner{display:table;margin-left:auto;margin-right:auto;background:#ffcc00;color:#000;font-weight:700;padding:.4rem 1rem;border-radius:999px;margin-bottom:1rem;font-size:.85rem}
+.logo-wrap{position:relative;display:inline-block}
+body.king .logo-wrap::before{content:"👑";position:absolute;top:-14%;left:50%;transform:translateX(-50%) rotate(-8deg);font-size:min(110px,22vw);filter:drop-shadow(0 0 18px #ffcc00);z-index:2}
+body.haunted{background:#050208 radial-gradient(ellipse at top,#2a0a3a 0%,#0a0410 55%,#050505 100%)}
+body.haunted .glow{color:#c77dff;text-shadow:0 0 8px #9d4edd,0 0 20px #7b2cbf,0 0 40px #39ff14}
+body.haunted .card,body.haunted .steps li,body.haunted .chapters article{border-color:#7b2cbf}
+.chapters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;text-align:left}
+.chapters article{background:#120700;border:1px solid #5a2a00;border-radius:14px;padding:1rem;position:relative}
+.chapters h3{color:#ffb15c;font-size:1rem;margin-bottom:.4rem}
+.chapters .lock{display:block;font-weight:700;color:#ffcc00;font-size:.85rem}
+.chapters article.locked p{filter:blur(5px);user-select:none}
+.chips button:disabled{opacity:.4;cursor:not-allowed}
+.controls small{color:#c9a888;font-weight:400}
+.prelaunch{background:#120700;border:2px solid #ff7b00;border-radius:16px;padding:2rem 1rem;box-shadow:0 0 20px rgba(255,120,0,.35)}
+.lcd{font-size:clamp(2rem,8vw,3.4rem);margin:.4rem 0 1rem}
+.prelaunch .btn{display:inline-block;margin-top:1rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
+.stats div{background:#120700;border:1px solid #5a2a00;border-radius:12px;padding:.8rem}
+.stats small{display:block;color:#c9a888;text-transform:uppercase;font-size:.7rem;letter-spacing:2px}
+.stats b{color:#ff8c1a;font-size:1.1rem}
+.mprog{height:18px;background:#1a0a00;border:2px solid #5a2a00;border-radius:999px;overflow:hidden}
+.mbar{height:100%;width:0;background:linear-gradient(90deg,#ff5e00,#ffb347);box-shadow:0 0 12px #ff7b00;transition:width 1s}
+.mlabel{margin:.6rem 0 1.2rem;color:#ffb15c;font-weight:700}
+.ladder{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.6rem}
+.ladder li{background:#120700;border:2px dashed #5a2a00;border-radius:12px;padding:.7rem .5rem;display:flex;flex-direction:column;font-size:.85rem}
+.ladder li b{font-family:'Creepster',cursive;font-size:1.5rem;color:#ff8c1a}
+.ladder li em{font-style:normal;font-size:.75rem;color:#c9a888}
+.ladder li.done{border:2px solid #ff7b00;box-shadow:0 0 12px rgba(255,120,0,.45)}
+.ladder li.done em{color:#7dff7d}
+.sus{margin-top:2rem}.sus h3{color:#ffb15c;margin-bottom:.6rem}
+.gauge{width:220px;height:110px;margin:0 auto;border-radius:220px 220px 0 0;background:conic-gradient(from 270deg at 50% 100%,#39ff14 0deg,#ffcc00 90deg,#ff2a00 180deg,transparent 180deg);position:relative;overflow:hidden;box-shadow:0 0 18px rgba(255,120,0,.4)}
+.gauge::after{content:"";position:absolute;left:30px;right:30px;bottom:0;height:80px;background:#050505;border-radius:160px 160px 0 0}
+.needle{position:absolute;left:calc(50% - 3px);bottom:0;width:6px;height:100px;background:#fff;border-radius:3px;transform-origin:50% 100%;transform:rotate(0deg);transition:transform 1s;z-index:2;box-shadow:0 0 8px #fff}
+.featured-wrap h3{color:#ffb15c;margin-bottom:.6rem}
+.featured{min-height:120px;display:flex;align-items:center;justify-content:center;border:2px dashed #ff7b00;border-radius:14px;padding:1rem;color:#c9a888;margin-bottom:1.2rem}
+.featured img{max-width:100%;max-height:420px;border-radius:10px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem}
+.gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid #5a2a00}
+.gallery .empty{grid-column:1/-1;color:#ffb15c}
+.stickers{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-top:1rem}
+.sticker{background:#0d0500;border:1px solid #5a2a00;border-radius:14px;padding:.7rem;display:flex;flex-direction:column;gap:.6rem;align-items:center}
+.sticker canvas{width:100%;height:auto;border-radius:10px;background:repeating-conic-gradient(#140800 0 25%,#0a0400 0 50%) 0 0/20px 20px}
+.sticker .btn{border-radius:999px;font-size:.8rem;padding:.55rem .8rem;width:100%}
+.toasts{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;display:flex;flex-direction:column;gap:.5rem;width:min(92vw,420px);pointer-events:none}
+.toast{background:#1a0a00;border:2px solid #ff7b00;color:#fff;border-radius:14px;padding:.8rem 1rem;box-shadow:0 0 22px rgba(255,120,0,.55);font-weight:700;animation:tin .35s ease-out;text-align:center}
+.toast.mini{font-size:.85rem;font-weight:400;padding:.5rem .8rem}
+.toast.out{opacity:0;transform:translateY(10px);transition:.4s}
+@keyframes tin{from{opacity:0;transform:translateY(20px)}}
+.confetti{position:fixed;top:-40px;z-index:60;pointer-events:none;animation:fall 3s linear forwards;will-change:transform}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.dancer{position:fixed;bottom:10px;left:-180px;z-index:55;pointer-events:none;animation:dance 6s linear forwards}
+.dancer canvas{width:120px;height:150px;animation:bop .4s ease-in-out infinite alternate}
+@keyframes dance{to{left:calc(100vw + 20px)}}
+@keyframes bop{from{transform:rotate(-12deg) translateY(0)}to{transform:rotate(12deg) translateY(-20px)}}
+.night-ghost{display:none}
+body.night .night-ghost{display:block;position:fixed;right:4vw;top:30vh;font-size:56px;z-index:5;pointer-events:none;opacity:.8;animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 12px #fff)}
+body.night .glow{animation:flicker 4s infinite}
+@keyframes float{50%{transform:translate(-30px,-40px)}}
+@keyframes flicker{0%,18%,22%,62%,64%,100%{opacity:1}20%,63%{opacity:.45}}
+body.paused *,body.paused *::before{animation-play-state:paused!important}
+@media(max-width:480px){.stats{grid-template-columns:1fr}.stickers{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.confetti,.dancer{display:none}}
