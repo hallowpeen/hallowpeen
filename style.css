@@ -1,0 +1,49 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#050505 radial-gradient(ellipse at top,#2a1200 0%,#050505 60%);color:#f3e6d8;font-family:'Rubik',sans-serif;line-height:1.6}
+.glow{font-family:'Creepster',cursive;color:#ff8c1a;text-shadow:0 0 8px #ff7b00,0 0 20px #ff5e00,0 0 40px #ff3c00;letter-spacing:2px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:1.2rem;padding:1rem;position:sticky;top:0;background:rgba(5,5,5,.85);backdrop-filter:blur(6px);z-index:10;border-bottom:1px solid #3a1a00}
+nav a{color:#ffb15c;text-decoration:none;font-weight:700}
+nav a:hover{color:#fff}
+.hero{text-align:center;padding:3rem 1rem 4rem}
+.logo{width:min(380px,80vw);border-radius:50%;box-shadow:0 0 40px #ff6a00,0 0 90px #ff4500;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 60px #ff8c1a,0 0 130px #ff5e00}}
+h1{font-size:clamp(3rem,12vw,7rem);margin-top:1.5rem;line-height:1}
+.ticker{font-size:1.5rem;font-weight:700;color:#ffb15c}
+.tagline{font-size:1.25rem;margin:.5rem auto 2rem;max-width:600px}
+.cd-label{text-transform:uppercase;letter-spacing:3px;color:#ffb15c;margin-bottom:.8rem}
+.countdown{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.countdown div{background:#140800;border:2px solid #ff7b00;border-radius:12px;padding:.8rem 1rem;min-width:84px;box-shadow:0 0 15px rgba(255,120,0,.4)}
+.countdown span{display:block;font-family:'Creepster',cursive;font-size:2.6rem;color:#ff8c1a;text-shadow:0 0 10px #ff6a00}
+.countdown small{text-transform:uppercase;font-size:.75rem;letter-spacing:2px}
+section{max-width:960px;margin:0 auto;padding:4rem 1.25rem;text-align:center}
+h2{font-size:clamp(2.4rem,7vw,3.6rem);margin-bottom:1.5rem}
+#about p{font-size:1.15rem;max-width:720px;margin:auto}
+.steps{list-style:none;counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;text-align:left}
+.steps li{counter-increment:s;background:#120700;border:1px solid #5a2a00;border-radius:14px;padding:1.2rem}
+.steps li::before{content:counter(s);font-family:'Creepster',cursive;font-size:2rem;color:#ff8c1a;text-shadow:0 0 8px #ff6a00;display:block}
+.steps b{display:block;color:#ffb15c;margin-bottom:.3rem}
+.ca{display:flex;margin:2rem auto 1rem;max-width:520px;border:2px solid #ff7b00;border-radius:12px;overflow:hidden;box-shadow:0 0 18px rgba(255,120,0,.35)}
+.ca code{flex:1;padding:.9rem 1rem;background:#0d0500;font-size:1.05rem;text-align:left;overflow-wrap:anywhere}
+.ca button,.btn{background:#ff7b00;color:#000;font-weight:700;border:none;padding:.9rem 1.4rem;cursor:pointer;font-family:inherit;font-size:1rem}
+.ca button:hover,.btn:hover{background:#ffa24a}
+.warn{font-size:.9rem;color:#c9a888}
+.ph-note{color:#ffcc00;font-weight:700;margin-bottom:1.2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.card{background:#120700;border:2px dashed #ff7b00;border-radius:14px;padding:1.4rem}
+.card h3{color:#ffb15c}
+.card p{font-size:1.6rem;font-weight:700;color:#ff8c1a}
+.card small{font-size:.75rem;color:#ffcc00;text-transform:uppercase;letter-spacing:2px}
+.socials{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.btn{text-decoration:none;border-radius:999px;padding:1rem 2rem;box-shadow:0 0 20px rgba(255,120,0,.5)}
+footer{border-top:1px solid #3a1a00;padding:2rem 1.25rem;text-align:center;font-size:.85rem;color:#a88d74;max-width:900px;margin:0 auto}
+footer p+p{margin-top:.8rem}
+@media(max-width:480px){.countdown div{min-width:68px;padding:.6rem}.countdown span{font-size:2rem}nav{gap:.8rem;font-size:.9rem}}
+
+.cta{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin:1rem 0}
+.btn.small{padding:.7rem 1.2rem;font-size:.9rem}
+.btn.ghost{background:transparent;color:#ffb15c;border:2px solid #ff7b00;box-shadow:none}
+.btn.ghost:hover{background:#2a1200}
+.card p{font-size:1.4rem}
+.fine{font-size:.85rem;color:#c9a888;margin-top:1.2rem;max-width:720px;margin-left:auto;margin-right:auto}
+.steps{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
