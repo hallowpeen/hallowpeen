@@ -47,3 +47,15 @@ footer p+p{margin-top:.8rem}
 .card p{font-size:1.4rem}
 .fine{font-size:.85rem;color:#c9a888;margin-top:1.2rem;max-width:720px;margin-left:auto;margin-right:auto}
 .steps{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+
+.carver{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem;align-items:start;margin-top:1.5rem;text-align:left}
+#carve{width:100%;height:auto;border-radius:14px;border:2px solid #ff7b00;box-shadow:0 0 25px rgba(255,120,0,.4);touch-action:none;cursor:grab;background:#050505}
+.controls{display:flex;flex-direction:column;gap:.5rem}
+.controls label{color:#ffb15c;font-weight:700;margin-top:.4rem}
+.controls input[type=text]{background:#0d0500;border:2px solid #5a2a00;color:#f3e6d8;border-radius:10px;padding:.7rem;font:inherit;width:100%}
+.controls input[type=range]{accent-color:#ff7b00;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips button{background:#120700;color:#f3e6d8;border:2px solid #5a2a00;border-radius:999px;padding:.5rem .9rem;font:inherit;cursor:pointer}
+.chips button.on{border-color:#ff7b00;background:#2a1200;box-shadow:0 0 10px rgba(255,120,0,.5)}
+.controls .cta{justify-content:flex-start}
+@media(max-width:760px){.carver{grid-template-columns:1fr}}
