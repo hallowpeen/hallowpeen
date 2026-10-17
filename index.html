@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Creepster&family=Rubik:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Creepster&family=Rubik:wght@400;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="style.css"></head><body>
 <a class="skip" href="#main">Skip to the sus content</a>
-<nav aria-label="Main"><a href="#about">Lore</a><a href="#carve-sec">Carve</a><a href="#dash-sec">Vent Dash</a><a href="#quest-sec">Quest</a><a href="#unlocks">Tasks</a><a href="#stickers-sec">Stickers</a><a href="#buy">How to Buy</a><a href="#tokenomics">Tokenomics</a><a href="#socials">Socials</a></nav>
+<nav aria-label="Main"><a href="#about">Lore</a><a href="#carve-sec">Carve</a><a href="#dash-sec">Vent Dash</a><a href="#quest-sec">Quest</a><a href="#quiz-sec">Quiz</a><a href="#unlocks">Tasks</a><a href="#stickers-sec">Stickers</a><a href="#buy">How to Buy</a><a href="#tokenomics">Tokenomics</a><a href="#socials">Socials</a></nav>
 <main id="main">
 <header class="hero">
 <div id="demoBanner" class="demo-banner" hidden></div>
@@ -52,6 +52,7 @@
 <section id="gallery-sec"><h2 class="glow">Crew Carvings</h2>
 <div class="featured-wrap"><h3>Featured this week: Not the Impostor ✅</h3><div id="featured" class="featured">Featured carving got ejected. Coming back soon 🎃</div></div>
 <div id="gallery" class="gallery"></div></section>
+<section id="quiz-sec"><h2 class="glow">What Kind of Crewmate Are You?</h2><p id="quizIntro">5 questions. Zero tasks. 100% sus. Get a shareable card at the end.</p><div id="quiz" class="quiz card" aria-live="polite"></div></section>
 <section id="stickers-sec"><h2 class="glow">Sus Sticker &amp; PFP Pack</h2><p>Free $HPEEN stickers, carved fresh in your browser. Tap to yoink. Change your PFP, become dummy thicc.</p><div id="stickers" class="stickers"></div></section>
 <section id="buy"><h2 class="glow">How to Buy</h2>
 <div id="prelaunch" class="prelaunch" hidden><p class="cd-label">Emergency meeting (launch on pump.fun) in</p><p id="lcd" class="lcd glow">--</p><p>The pumpkin isn't carved yet. Don't get left in the vents: follow on X so you're there when the button gets slammed.</p><a id="notifyBtn" class="btn" href="#" target="_blank" rel="noopener">𝕏 Get pinged on X (no venting)</a></div>
@@ -111,4 +112,5 @@ document.getElementById('copy').onclick=async e=>{const txt=document.getElementB
 try{await navigator.clipboard.writeText(txt)}catch(_){}e.target.textContent='Copied!';setTimeout(()=>e.target.textContent='Copy',1500)};
 </script><div id="toasts" class="toasts" aria-live="polite"></div><div class="night-ghost" aria-hidden="true">👻</div>
 <script src="sound.js"></script><script src="app.js"></script><script src="features.js"></script><script src="motion.js"></script><script src="extras.js"></script><script src="game.js"></script><script src="quest.js"></script>
-<script src="board.js"></script></body></html>
+<script src="board.js"></script>
+<script src="quiz.js"></script></body></html>

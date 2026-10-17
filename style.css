@@ -256,3 +256,13 @@ html body{transition:transform .8s cubic-bezier(.34,1.56,.64,1)}
 .board li small{opacity:.6;min-width:48px;text-align:right}
 .board li.empty{opacity:.7;justify-content:center}
 .small-note{opacity:.75;font-size:.9rem}
+.quiz{max-width:640px;margin:18px auto 0;text-align:center}
+.quiz .qz-prog{font-size:.9rem;opacity:.7;color:#ffb347;font-weight:400;margin:0}
+.quiz .qz-q{font-size:1.4rem;margin:.4rem 0 1rem;color:#fff;outline:none}
+.quiz p{font-size:1rem;font-weight:400;color:#f3e6d8}
+.qz-opts{display:grid;gap:10px}
+.qz-opt{width:100%;text-align:left;white-space:normal}
+.qz-card{width:100%;max-width:420px;height:auto;border-radius:14px;box-shadow:0 0 30px rgba(255,123,0,.4)}
+.qz-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}
+.ghost-btn{background:transparent;border:2px solid #ff7b00;color:#ffb347}
+html,body{overflow-x:clip}
