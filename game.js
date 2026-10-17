@@ -1,5 +1,5 @@
 /* Vent Dash: tiny runner. Loop runs only while playing + visible. */
-(function(){"use strict";
+(function(){"use strict";const T=s=>window.HPI?HPI.t(s):s;
 const cv=document.getElementById('dash');if(!cv||!window.HP)return;
 const c=cv.getContext('2d'),W=cv.width,H=cv.height,GY=H-58;
 const $=id=>document.getElementById(id);const snd=n=>{try{window.HPS&&HPS.play(n)}catch(e){}};
@@ -11,7 +11,7 @@ function jump(){visible=true;if(state!=='play'){start();return;}if(P.ground){P.v
 function start(){reset();state='play';snd('whoosh');$('dashMsg').hidden=true;loop();}
 function over(){state='over';shake=12;snd('bonk');const s=score();try{const top=JSON.parse(localStorage.getItem('hp_dash_top')||'[]');top.push({s,d:Date.now()});top.sort((a,b)=>b.s-a.s);localStorage.setItem('hp_dash_top',JSON.stringify(top.slice(0,5)));dispatchEvent(new Event('hp:board'));}catch(e){}if(s>best){best=s;newBest=true;try{localStorage.setItem('hp_dash_best',best)}catch(e){}setTimeout(()=>snd('siren'),300);}
   $('dashMsg').hidden=false;$('dashTitle').textContent=newBest?'NEW HIGH SCORE, SUSSY BAKA 🏆':'YOU GOT VENTED 💀';$('dashSub').textContent='Score '+s+' · best '+best+' · tap / space to retry';
-  $('dashShare').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('I scored '+s+' in Vent Dash and stayed dummy thicc the whole time 🍑🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.com/');$('dashShare').hidden=false;draw();}
+  $('dashShare').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(T('I scored')+' '+s+' '+T('in Vent Dash and stayed dummy thicc the whole time 🍑🎃 $HPEEN'))+'&url='+encodeURIComponent('https://hallowpeen.com/');$('dashShare').hidden=false;draw();}
 function spawn(){const r=Math.random();if(r<0.4)obs.push({k:'vent',x:W+20,y:GY+2,w:70,h:18});else if(r<0.7)obs.push({k:'pumpkin',x:W+20,y:GY-34,w:40,h:36,rot:0});else obs.push({k:'knife',x:W+20,y:GY-(Math.random()<0.5?40:120),w:56,h:14});
   spawnT=Math.max(38,90-speed*4)+Math.random()*50;}
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
@@ -45,7 +45,7 @@ function draw(){c.save();if(shake>0){c.translate((Math.random()-.5)*shake,(Math.
   c.save();c.fillStyle='rgba(0,0,0,.4)';c.beginPath();c.ellipse(P.x,GY+40,34*(1-(GY-P.y)/400),7,0,0,7);c.fill();c.restore();
   c.save();c.translate(P.x,P.y+38);c.scale(sx,sy);c.rotate(P.ground?run*0.05:-0.12);c.translate(-P.x,-(P.y+38));c.translate(P.x,0);c.scale(-1,1);c.translate(-P.x,0);HP.drawCrew(c,P.x,P.y-8,0.62,'thicc',HP.COLORS.orange,{});c.restore();
   parts.forEach(p=>{c.globalAlpha=p.l;c.fillStyle=p.c;c.fillRect(p.x,p.y,4,4);});c.globalAlpha=1;
-  c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.textAlign='left';c.fillText('Score '+score(),16,28);c.textAlign='right';c.fillText('Best '+best+'  🍬'+cand,W-16,28);
+  c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.textAlign='left';c.fillText(T('Score')+' '+score(),16,28);c.textAlign='right';c.fillText(T('Best')+' '+best+'  🍬'+cand,W-16,28);
   const v=c.createRadialGradient(W/2,H/2,H*0.4,W/2,H/2,W*0.7);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');c.fillStyle=v;c.fillRect(0,0,W,H);c.restore();}
 function onScreen(){if(visible)return true;const r=cv.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;}
 function frame(now){raf=0;if(state!=='play')return;if(!onScreen()||document.hidden){state='paused';$('dashMsg').hidden=false;$('dashTitle').textContent='Paused (you looked away, sus)';$('dashSub').textContent='tap / space to resume';return;}

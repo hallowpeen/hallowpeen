@@ -270,3 +270,5 @@ html,body{overflow-x:clip}
 .kit-item{background:#120700;border:2px dashed #ff7b00;border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .kit-item img{width:100%;height:auto;max-height:160px;object-fit:contain;border-radius:8px;background:repeating-conic-gradient(#1c0d02 0 25%,#120700 0 50%) 0 0/16px 16px}
 .kit-item p{margin:0;font-size:.9rem;font-weight:600;color:#ffb347;flex:1}
+.lang-toggle{background:transparent;border:2px solid #ff7b00;color:#ffb15c;border-radius:999px;padding:.15rem .7rem;font:700 .9rem Rubik,sans-serif;cursor:pointer;flex:0 0 auto}
+.lang-toggle:hover,.lang-toggle:focus-visible{background:#ff7b00;color:#120700}

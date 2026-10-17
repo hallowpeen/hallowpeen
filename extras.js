@@ -32,7 +32,7 @@ safe(()=>{const spots=[['about','8%','12%'],['carve-sec','92%','6%'],['unlocks',
   function certified(){safe(()=>{const wrap=document.getElementById('stickers');if(!wrap||document.getElementById('certSus'))return;const S=512,c=document.createElement('canvas');c.width=S;c.height=S;const x=c.getContext('2d');
     x.fillStyle='#120700';x.beginPath();x.arc(S/2,S/2,S/2-14,0,7);x.fill();x.lineWidth=16;x.strokeStyle='#ffcc00';x.shadowColor='#ffcc00';x.shadowBlur=30;x.stroke();x.shadowBlur=0;
     HP.drawCrew(x,S/2,S*0.5,1.9,'shoulder',HP.SPECIAL.golden,{});
-    x.font='64px Creepster, cursive';x.textAlign='center';x.fillStyle='#ffcc00';x.lineWidth=8;x.strokeStyle='#1a0800';x.strokeText('CERTIFIED SUS',S/2,S*0.86);x.fillText('CERTIFIED SUS',S/2,S*0.86);
+    x.font='64px Creepster, cursive';x.textAlign='center';x.fillStyle='#ffcc00';x.lineWidth=8;x.strokeStyle='#1a0800';x.strokeText('CERTIFIED SUS',S/2,S*0.86);x.fillText(window.HPI?HPI.t('CERTIFIED SUS'):'CERTIFIED SUS',S/2,S*0.86);
     const card=document.createElement('div');card.className='sticker cert';card.id='certSus';const btn=document.createElement('button');btn.type='button';btn.className='btn small';btn.textContent='⬇ Yoink Certified Sus (secret)';
     btn.onclick=()=>safe(()=>{const a=document.createElement('a');a.download='hpeen-certified-sus.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();});
     card.appendChild(c);card.appendChild(btn);wrap.prepend(card);});}

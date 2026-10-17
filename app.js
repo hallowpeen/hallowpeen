@@ -1,5 +1,5 @@
 /* HallowPeen carver: canvas meme generator. Exposes window.HP for features.js */
-(function(){
+(function(){const HPL=s=>window.HPI?HPI.t(s):s;
 const COLORS={orange:['#ff7b00','#ffb347'],green:['#39ff14','#b6ff9e'],purple:['#b026ff','#e0a3ff']};
 let T=0; // animation clock (seconds); 0 = static pose
 // per-frame acting state (follow-through lag, blink, visor offset, bump, impact flash)
@@ -56,9 +56,9 @@ function special(c,pose,col){
   if(pose==='ventpeek'){c.save();c.beginPath();c.rect(-200,-200,215,400);c.clip();c.translate(20+(T?Math.sin(T*3)*6:0),0);c.rotate(T?Math.sin(T*9)*0.06:0);thiccBody(c,col);c.restore();
     c.save();c.fillStyle='#2b2b2b';c.strokeStyle='#888';c.lineWidth=4;rr(c,15,-95,34,180,6);c.fill();c.stroke();c.strokeStyle='#555';
     for(let y=-80;y<=70;y+=18){c.beginPath();c.moveTo(20,y);c.lineTo(44,y);c.stroke();}c.restore();
-    motion(c,col,-40,35);c.save();c.font='bold 22px Rubik, sans-serif';c.fillStyle='#fff';c.fillText('*stuck*',-60,-80);c.restore();return true;}
+    motion(c,col,-40,35);c.save();c.font='bold 22px Rubik, sans-serif';c.fillStyle='#fff';c.fillText(HPL('*stuck*'),-60,-80);c.restore();return true;}
   if(pose==='booty'){c.scale(-1,1);thiccBody(c,col);c.save();if(T&&(T%1.4)<0.5)c.translate(Math.sin(T*90)*2.5,0);c.fillStyle='#222';c.strokeStyle='#fff';c.lineWidth=3;c.shadowColor='#7df';c.shadowBlur=14;rr(c,38,-40,22,38,5);c.fill();c.stroke();c.fillStyle='#7df';c.fillRect(42,-35,14,26);c.restore();
-    c.scale(-1,1);c.save();c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.fillText('📱 u up?',-90,-80);c.restore();return true;}
+    c.scale(-1,1);c.save();c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.fillText(HPL('📱 u up?'),-90,-80);c.restore();return true;}
   if(pose==='backitup'){const bump=T&&AN.bump!=null?AN.bump:0;c.save();c.scale(0.8,0.8);c.translate(-62-bump,0);thiccBody(c,col);c.restore();c.save();c.scale(0.8,0.8);c.translate(62+bump,0);c.scale(-1,1);thiccBody(c,['#ff2a2a','#ff8a8a']);c.restore();
     c.save();c.globalAlpha=bump<4?1:0.15;if(T&&AN.flash){c.lineWidth=7;c.scale(1.5,1.5);}c.strokeStyle='#fff';c.lineWidth=4;c.lineCap='round';c.shadowColor='#fff';c.shadowBlur=8;[[-1,-1],[0,-1.3],[1,-1],[-1,1],[1,1]].forEach(([dx,dy])=>{c.beginPath();c.moveTo(dx*14,25+dy*14);c.lineTo(dx*32,25+dy*32);c.stroke();});
     c.font='bold 24px Creepster, cursive';c.fillStyle='#ffcc00';c.textAlign='center';c.fillText('BONK!',0,-60);c.restore();return true;}
@@ -66,11 +66,11 @@ function special(c,pose,col){
       L.forEach(([fc,w,h],i)=>{c.fillStyle=fc;c.strokeStyle='#c46a8c';c.lineWidth=3;rr(c,-w/2,y+i*h,w,h,6);c.fill();c.stroke();});
       c.fillStyle='#ff4d6d';for(let i=-45;i<=45;i+=30){c.beginPath();c.arc(i,50,7,0,7);c.fill();}c.restore();
     c.save();c.translate(0,-15);c.scale(0.8,0.8);thiccBody(c,col);c.restore();
-    c.save();c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.textAlign='center';c.fillText('🎂 sitting on cake (literally)',0,165);c.restore();return true;}
+    c.save();c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.textAlign='center';c.fillText((window.HPI?HPI.t('🎂 sitting on cake (literally)'):'🎂 sitting on cake (literally)'),0,165);c.restore();return true;}
   if(pose==='inspect'){c.save();c.fillStyle='rgba(57,255,20,.25)';c.strokeStyle='#39ff14';c.lineWidth=4;c.shadowColor='#39ff14';c.shadowBlur=20;c.beginPath();c.ellipse(0,85,95,20,0,0,7);c.fill();c.stroke();
       c.globalAlpha=.25;c.fillStyle='#39ff14';c.fillRect(-80,-100,160,185);c.globalAlpha=.9;c.fillStyle='#b6ff9e';c.fillRect(-80,-100+((T*90)%185),160,5);c.restore();
     c.save();c.rotate(0.4);thiccBody(c,col);c.restore();
-    c.save();c.fillStyle='#fff';c.beginPath();c.ellipse(55,-110,80,24,0,0,7);c.fill();c.font='bold 17px Rubik, sans-serif';c.fillStyle='#111';c.textAlign='center';c.textBaseline='middle';c.fillText('👀 scanning...',55,-110);c.restore();return true;}
+    c.save();c.fillStyle='#fff';c.beginPath();c.ellipse(55,-110,80,24,0,0,7);c.fill();c.font='bold 17px Rubik, sans-serif';c.fillStyle='#111';c.textAlign='center';c.textBaseline='middle';c.fillText(HPL('👀 scanning...'),55,-110);c.restore();return true;}
   if(pose==='caught'){c.save();c.scale(0.75,0.75);c.translate(-55,0);drawCrew(c,0,0,1,'standing',col,{});c.translate(95,0);drawCrew(c,0,0,1,'sus',['#ff2a2a','#ff8a8a'],{});c.restore();
     c.save();c.fillStyle='#fff';c.shadowColor='#fff';c.shadowBlur=8;c.beginPath();c.ellipse(55,-95,38,26,0,0,7);c.fill();c.beginPath();c.moveTo(35,-75);c.lineTo(25,-55);c.lineTo(50,-72);c.fill();
     c.font='30px sans-serif';c.textAlign='center';c.textBaseline='middle';c.shadowBlur=0;c.fillText('👀',55,-95);c.restore();return true;}
@@ -267,6 +267,6 @@ $('dlBtn').onclick=()=>{try{const a=document.createElement('a');a.download='hall
     rec.onstop=()=>{recording=false;rb.disabled=false;rb.textContent='🎥 Record 3s WebM';try{const url=URL.createObjectURL(new Blob(chunks,{type:'video/webm'}));const a=document.createElement('a');a.href=url;a.download='hallowpeen-sus-pumpkin.webm';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}catch(e){}};
     recording=true;startLoop();rb.disabled=true;rb.textContent='🔴 Recording the cake…';rec.start();setTimeout(()=>{try{rec.stop()}catch(e){recording=false}},3000);}
    catch(e){recording=false;rb.textContent='Recorder got ejected 😵 try PNG';}};})();
-$('xBtn').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('Carved my own sus pumpkin 🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.com/');
+$('xBtn').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(window.HPI?HPI.t('Carved my own sus pumpkin 🎃 $HPEEN'):'Carved my own sus pumpkin 🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.com/');
 draw();if(document.fonts)document.fonts.ready.then(draw);
 })();

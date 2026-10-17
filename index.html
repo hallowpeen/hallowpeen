@@ -112,6 +112,7 @@ tick();setInterval(tick,1000);
 document.getElementById('copy').onclick=async e=>{const txt=document.getElementById('ca').textContent;
 try{await navigator.clipboard.writeText(txt)}catch(_){}e.target.textContent='Copied!';setTimeout(()=>e.target.textContent='Copy',1500)};
 </script><div id="toasts" class="toasts" aria-live="polite"></div><div class="night-ghost" aria-hidden="true">👻</div>
+<script src="i18n.js"></script>
 <script src="sound.js"></script><script src="app.js"></script><script src="features.js"></script><script src="motion.js"></script><script src="extras.js"></script><script src="game.js"></script><script src="quest.js"></script>
 <script src="board.js"></script>
 <script src="quiz.js"></script>
