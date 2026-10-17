@@ -30,7 +30,8 @@ const gap={whoosh:5000,siren:1500,ghost:4000,jiggle:600};
 function play(name){if(!on||!armed||!FX[name])return;const now=performance.now();if(now-last<150)return;if(gap[name]&&now-(lastBy[name]||0)<gap[name])return;
   if(!ensure())return;if(ctx.state==='suspended'){try{ctx.resume()}catch(e){}}last=now;lastBy[name]=now;try{FX[name]()}catch(e){}}
 // toggle UI
-function ui(){const b=document.createElement('button');b.type='button';b.className='sound-toggle';const T=s=>window.HPI?HPI.t(s):s;const set=()=>{b.textContent=on?T('🔊 sound: on'):T('🔇 sound: off, coward');b.setAttribute('aria-pressed',on?'true':'false');};
+const fill=(b,str)=>{const i=str.indexOf(' ');b.textContent='';const ic=document.createElement('span');ic.className='ic';ic.textContent=i>0?str.slice(0,i):str;const lb=document.createElement('span');lb.className='lbl';lb.textContent=i>0?str.slice(i):'';b.append(ic,lb);b.title=str;};
+function ui(){const b=document.createElement('button');b.type='button';b.className='sound-toggle';const T=s=>window.HPI?HPI.t(s):s;const set=()=>{fill(b,on?T('🔊 sound: on'):T('🔇 sound: off, coward'));b.setAttribute('aria-pressed',on?'true':'false');};
   b.setAttribute('aria-label','Toggle sound effects');set();
   b.addEventListener('click',()=>{on=!on;try{localStorage.setItem('hp_sound',on?'on':'off')}catch(e){}set();if(on){ensure();if(ctx&&ctx.state==='suspended')ctx.resume();last=0;play('boing');}});
   document.body.appendChild(b);}
@@ -57,7 +58,7 @@ function musicStart(){if(!ensure())return;if(ctx.state==='suspended')ctx.resume(
   mGain.gain.setTargetAtTime(0.16,ctx.currentTime,0.3);mNext=ctx.currentTime+0.1;clearInterval(mTimer);mTimer=setInterval(mTick,100);}
 function musicStop(){clearInterval(mTimer);mTimer=0;if(mGain&&ctx)mGain.gain.setTargetAtTime(0.0001,ctx.currentTime,0.2);}
 function mui(){const b=document.createElement('button');b.type='button';b.className='sound-toggle music-toggle';const T=s=>window.HPI?HPI.t(s):s;
-  const set=()=>{b.textContent=mOn?T('🎵 music: on'):T('🎵 music: off');b.setAttribute('aria-pressed',mOn?'true':'false');};b.setAttribute('aria-label',T('Toggle spooky soundtrack'));set();
+  const set=()=>{fill(b,mOn?T('🎵 music: on'):T('🎵 music: off'));b.setAttribute('aria-pressed',mOn?'true':'false');};b.setAttribute('aria-label',T('Toggle spooky soundtrack'));set();
   b.addEventListener('click',()=>{mOn=!mOn;try{localStorage.setItem('hp_music',mOn?'on':'off')}catch(e){}set();mOn?musicStart():musicStop();});document.body.appendChild(b);
   // remembered "on": start after the first user gesture (autoplay rules)
   if(mOn){const go=()=>{removeEventListener('pointerdown',go,true);removeEventListener('keydown',go,true);if(mOn)musicStart();};addEventListener('pointerdown',go,true);addEventListener('keydown',go,true);}}

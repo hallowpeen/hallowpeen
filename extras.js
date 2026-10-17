@@ -20,7 +20,7 @@ safe(()=>{const spots=[['about','8%','12%'],['carve-sec','92%','6%'],['unlocks',
   let found=ls.get('hp_found',[]);if(!Array.isArray(found))found=[];
   const cols=[HP.COLORS.orange,HP.COLORS.green,HP.COLORS.purple,['#ff2a2a','#ff8a8a'],['#5ee7ff','#e6fbff']];
   const badge=document.createElement('div');badge.className='hunt-badge';badge.setAttribute('aria-live','polite');document.body.appendChild(badge);
-  const upd=()=>{badge.textContent='🔍 impostors found: '+found.length+'/5';badge.classList.toggle('done',found.length>=5);};upd();
+  const upd=()=>{badge.textContent='';const ic=document.createElement('span');ic.textContent='🔍 ';const lb=document.createElement('span');lb.className='lbl';lb.textContent='impostors found: ';badge.append(ic,lb,document.createTextNode(found.length+'/5'));badge.title='impostors found: '+found.length+'/5';badge.classList.toggle('done',found.length>=5);};upd();
   spots.forEach(([id,x,y],i)=>{const sec=document.getElementById(id);if(!sec||found.includes(i))return;
     if(getComputedStyle(sec).position==='static')sec.style.position='relative';
     const b=document.createElement('button');b.type='button';b.className='hidden-crew';b.style.left=x;b.style.top=y;b.setAttribute('aria-label','A suspicious tiny crewmate');

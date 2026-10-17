@@ -4,10 +4,10 @@ const cv=document.getElementById('dash');if(!cv||!window.HP)return;
 const c=cv.getContext('2d'),W=cv.width,H=cv.height,GY=H-58;
 const $=id=>document.getElementById(id);const snd=n=>{try{window.HPS&&HPS.play(n)}catch(e){}};
 let best=0;try{best=+localStorage.getItem('hp_dash_best')||0}catch(e){}
-const P={x:110,y:GY,vy:0,ground:true,sq:0};let obs=[],candy=[],parts=[],speed=6,dist=0,cand=0,state='idle',raf=0,last=0,visible=false,spawnT=0,cT=0,t=0,shake=0,newBest=false;
-function reset(){P.y=GY;P.vy=0;P.ground=true;P.sq=0;obs=[];candy=[];parts=[];speed=6;dist=0;cand=0;spawnT=60;cT=90;t=0;shake=0;newBest=false;}
+const P={x:110,y:GY,vy:0,ground:true,sq:0};let hold=false,buf=0,lastTap=0;const TOP=74;let obs=[],candy=[],parts=[],speed=6,dist=0,cand=0,state='idle',raf=0,last=0,visible=false,spawnT=0,cT=0,t=0,shake=0,newBest=false;
+function reset(){hold=false;buf=0;P.y=GY;P.vy=0;P.ground=true;P.sq=0;obs=[];candy=[];parts=[];speed=6;dist=0;cand=0;spawnT=60;cT=90;t=0;shake=0;newBest=false;}
 function score(){return Math.floor(dist/10)+cand*5;}
-function jump(){visible=true;if(state!=='play'){start();return;}if(P.ground){P.vy=-15.5;P.ground=false;P.sq=-0.25;snd('pop');}}
+function jump(){visible=true;if(state!=='play'){start();return;}if(P.ground){P.vy=-12.5;P.ground=false;P.sq=-0.25;buf=0;snd('pop');}else buf=6;}
 function start(){reset();state='play';snd('whoosh');$('dashMsg').hidden=true;loop();}
 function over(){state='over';shake=12;snd('bonk');const s=score();try{const top=JSON.parse(localStorage.getItem('hp_dash_top')||'[]');top.push({s,d:Date.now()});top.sort((a,b)=>b.s-a.s);localStorage.setItem('hp_dash_top',JSON.stringify(top.slice(0,5)));dispatchEvent(new Event('hp:board'));}catch(e){}if(s>best){best=s;newBest=true;try{localStorage.setItem('hp_dash_best',best)}catch(e){}setTimeout(()=>snd('siren'),300);}
   $('dashMsg').hidden=false;$('dashTitle').textContent=newBest?'NEW HIGH SCORE, SUSSY BAKA 🏆':'YOU GOT VENTED 💀';$('dashSub').textContent='Score '+s+' · best '+best+' · tap / space to retry';
@@ -16,7 +16,7 @@ function spawn(){const r=Math.random();if(r<0.4)obs.push({k:'vent',x:W+20,y:GY+2
   spawnT=Math.max(38,90-speed*4)+Math.random()*50;}
 function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
 function step(){t++;speed=Math.min(15,6+dist/2500);dist+=speed;
-  P.vy+=0.8;P.y+=P.vy;if(P.y>=GY){if(!P.ground){P.sq=0.3;for(let i=0;i<6;i++)parts.push({x:P.x,y:GY+40,vx:(Math.random()-.5)*4,vy:-Math.random()*2,l:1,c:'#b9a99a'});}P.y=GY;P.vy=0;P.ground=true;}
+  P.vy+=(hold&&P.vy<0)?0.5:0.85;P.vy=Math.max(-13,Math.min(16,P.vy));P.y+=P.vy;if(P.y<TOP){P.y=TOP;if(P.vy<0)P.vy=0;}if(!isFinite(P.y)){P.y=GY;P.vy=0;}if(P.y>=GY){if(!P.ground){P.sq=0.3;for(let i=0;i<6;i++)parts.push({x:P.x,y:GY+40,vx:(Math.random()-.5)*4,vy:-Math.random()*2,l:1,c:'#b9a99a'});}P.y=GY;P.vy=0;P.ground=true;if(buf>0){buf=0;P.vy=-12.5;P.ground=false;P.sq=-0.25;snd('pop');}}if(buf>0)buf--;
   P.sq*=0.82;
   if(--spawnT<=0)spawn();if(--cT<=0){candy.push({x:W+20,y:GY-30-Math.random()*130,w:22,h:22});cT=50+Math.random()*80;}
   obs.forEach(o=>{o.x-=speed*(o.k==='knife'?1.35:1);if(o.k==='pumpkin')o.rot-=speed/20;});candy.forEach(o=>o.x-=speed);obs=obs.filter(o=>o.x>-100);candy=candy.filter(o=>o.x>-40&&!o.got);
@@ -47,15 +47,23 @@ function draw(){c.save();if(shake>0){c.translate((Math.random()-.5)*shake,(Math.
   parts.forEach(p=>{c.globalAlpha=p.l;c.fillStyle=p.c;c.fillRect(p.x,p.y,4,4);});c.globalAlpha=1;
   c.font='bold 20px Rubik, sans-serif';c.fillStyle='#fff';c.textAlign='left';c.fillText(T('Score')+' '+score(),16,28);c.textAlign='right';c.fillText(T('Best')+' '+best+'  🍬'+cand,W-16,28);
   const v=c.createRadialGradient(W/2,H/2,H*0.4,W/2,H/2,W*0.7);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');c.fillStyle=v;c.fillRect(0,0,W,H);c.restore();}
-function onScreen(){if(visible)return true;const r=cv.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;}
+function onScreen(){const r=cv.getBoundingClientRect();const vis=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);return vis>r.height*0.25;}
 function frame(now){raf=0;if(state!=='play')return;if(!onScreen()||document.hidden){state='paused';$('dashMsg').hidden=false;$('dashTitle').textContent='Paused (you looked away, sus)';$('dashSub').textContent='tap / space to resume';return;}
   if(now-last>=30){last=now;step();if(state!=='play')return;draw();}raf=requestAnimationFrame(frame);}
 function loop(){if(!raf)raf=requestAnimationFrame(frame);}
 function resume(){visible=true;if(state==='paused'){state='play';$('dashMsg').hidden=true;loop();return true;}return false;}
-cv.addEventListener('pointerdown',e=>{e.preventDefault();if(!resume())jump();});
+const wrap=cv.parentElement;
+function press(e){if(e.isPrimary===false)return;if(e.pointerType!=='mouse')e.preventDefault();const n=performance.now();if(n-lastTap<90)return;lastTap=n;hold=true;if(!resume())jump();}
+function release(){hold=false;}
+cv.addEventListener('pointerdown',press);$('dashMsg').addEventListener('pointerdown',press);
+['pointerup','pointercancel','pointerleave'].forEach(t=>{cv.addEventListener(t,release);$('dashMsg').addEventListener(t,release);});addEventListener('blur',release);
 $('dashShare').addEventListener('pointerdown',e=>e.stopPropagation());
-$('dashMsg').addEventListener('pointerdown',e=>{e.preventDefault();if(!resume())jump();});
-addEventListener('keydown',e=>{if(!visible)return;if(e.code==='Space'||e.key==='ArrowUp'){if(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;e.preventDefault();if(!resume())jump();}});
+// iOS Safari: while playing, a finger on the game never scrolls/zooms the page
+wrap.addEventListener('touchstart',e=>{if(state==='play'&&!e.target.closest('a'))e.preventDefault();},{passive:false});
+wrap.addEventListener('touchmove',e=>{if(state==='play')e.preventDefault();},{passive:false});
+const setPlay=()=>wrap.classList.toggle('playing',state==='play');setInterval(setPlay,250);
+addEventListener('keyup',e=>{if(e.code==='Space'||e.key==='ArrowUp')release();});
+addEventListener('keydown',e=>{if(!visible)return;if(e.code==='Space'||e.key==='ArrowUp'){if(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;e.preventDefault();if(e.repeat)return;hold=true;if(!resume())jump();}});
 try{new IntersectionObserver(es=>{visible=es[0].isIntersecting;}).observe(cv);}catch(e){visible=true;}
 $('dashBest').textContent=best;reset();if(document.fonts)document.fonts.ready.then(draw);draw();
 window.HPG={state:()=>state,score,running:()=>!!raf};

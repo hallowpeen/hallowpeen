@@ -606,7 +606,21 @@ function init(){for(let i=0;i<6;i++)S.bats.push({x:R(0,W),by:R(30,150),y:0,vx:R(
  if(!DEMO)findCA().then(()=>poll()).then(schedPoll).catch(schedPoll);}
 /* page chrome */
 function chrome(){const sb=document.getElementById('sndBtn');if(sb){const set=()=>{sb.textContent=SND.isOn()?'🔊 sound: on':'🔇 sound: off, coward';sb.setAttribute('aria-pressed',SND.isOn()?'true':'false');};set();sb.addEventListener('click',()=>{SND.set(!SND.isOn());set();SND.play('boing');});}
- const fb=document.getElementById('fsBtn');if(fb)fb.addEventListener('click',()=>{const st=document.getElementById('stage');try{if(document.fullscreenElement)document.exitFullscreen();else if(st.requestFullscreen)st.requestFullscreen();}catch(e){}});
+ // fullscreen: native (std + webkit) where it works, CSS pseudo-fullscreen fallback for iPhone Safari
+ (function(){const fb=document.getElementById('fsBtn'),stg=document.getElementById('stage');if(!fb||!stg)return;
+  const D=document,fsEl=()=>D.fullscreenElement||D.webkitFullscreenElement||null;
+  const ex=D.createElement('button');ex.type='button';ex.id='fsExit';ex.className='fs-exit';ex.setAttribute('aria-label','Exit fullscreen');ex.textContent='✕ Exit';stg.appendChild(ex);
+  const hint=D.createElement('div');hint.className='fs-hint';hint.textContent='↻ turn your phone sideways for the full sus';hint.setAttribute('aria-hidden','true');stg.appendChild(hint);
+  const isOn=()=>!!fsEl()||stg.classList.contains('pseudo-fs');
+  const sync=()=>{const on=isOn();D.documentElement.classList.toggle('fs-on',on);fb.textContent=on?'✕ Exit fullscreen':'⛶ Fullscreen';fb.setAttribute('aria-pressed',on?'true':'false');setTimeout(safe(resize),60);setTimeout(safe(resize),400);};
+  const pseudo=on=>{stg.classList.toggle('pseudo-fs',on);D.documentElement.classList.toggle('fs-lock',on);if(on)scrollTo(0,0);sync();};
+  const enter=()=>{const rq=stg.requestFullscreen||stg.webkitRequestFullscreen;if(rq&&(D.fullscreenEnabled||D.webkitFullscreenEnabled)){try{const r=rq.call(stg);if(r&&r.then)r.then(()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}).catch(()=>pseudo(true));return;}catch(e){}}pseudo(true);};
+  const exit=()=>{if(stg.classList.contains('pseudo-fs'))pseudo(false);if(fsEl()){try{const x=D.exitFullscreen||D.webkitExitFullscreen;const r=x&&x.call(D);if(r&&r.catch)r.catch(()=>{});}catch(e){}}sync();};
+  fb.addEventListener('click',()=>{isOn()?exit():enter();});ex.addEventListener('click',e=>{e.stopPropagation();exit();});
+  D.addEventListener('fullscreenchange',sync);D.addEventListener('webkitfullscreenchange',sync);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&stg.classList.contains('pseudo-fs'))pseudo(false);});
+  addEventListener('orientationchange',()=>setTimeout(safe(resize),300));
+  window.HPFS={on:isOn,enter,exit};})();
  const dl=document.getElementById('demoLink');if(dl&&DEMO){dl.textContent='📡 Real mode';dl.href='./';}
  const nf=document.getElementById('nameForm');if(nf)nf.addEventListener('submit',e=>{e.preventDefault();const inp=document.getElementById('nameIn'),out=document.getElementById('nameOut'),x=document.getElementById('nameShare');const r=cleanName(inp.value);
   if(!r.ok){out.textContent='❌ '+r.why;if(x)x.hidden=true;return;}

@@ -253,11 +253,20 @@ bindChips('data-pose','pose');document.querySelectorAll('[data-pose]').forEach(b
 const JIGGLE=['thicc','shoulder','twerk','ventpeek','booty','backitup','cake','inspect'];
 document.querySelectorAll('[data-pose]').forEach(b=>b.addEventListener('click',()=>{cv.classList.remove('jiggle');void cv.offsetWidth;if(JIGGLE.includes(st.pose))cv.classList.add('jiggle');}));bindChips('data-glow','glow');bindChips('data-acc','acc');
 $('topText').oninput=e=>{st.top=e.target.value;draw();};$('botText').oninput=e=>{st.bottom=e.target.value;draw();};
-$('sizeR').oninput=e=>{st.s=+e.target.value;draw();};
-let drag=null;const pt=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}};
-cv.addEventListener('pointerdown',e=>{const p=pt(e);if(Math.abs(p.x-st.x)<90*st.s&&Math.abs(p.y-st.y)<100*st.s){drag={dx:p.x-st.x,dy:p.y-st.y};try{cv.setPointerCapture(e.pointerId)}catch(_){}}});
-cv.addEventListener('pointermove',e=>{if(!drag)return;const p=pt(e);st.x=Math.max(0,Math.min(W,p.x-drag.dx));st.y=Math.max(0,Math.min(H,p.y-drag.dy));draw();});
-['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,()=>drag=null));
+$('sizeR').oninput=e=>{st.s=+e.target.value;if(typeof keepIn==='function')keepIn();draw();};
+// drag: dead zone + relative delta + clamp so the crewmate can never fly off / get stuck at an edge (iOS-safe)
+const keepIn=()=>{const s=st.s,cl=(v,a,b)=>a>b?(a+b)/2:Math.max(a,Math.min(b,v));st.x=cl(st.x,60*s,W-60*s);st.y=cl(st.y,(st.top?100:12)+72*s,H-(st.bottom?95:12)-66*s);};
+let drag=null;const sc=()=>{const r=cv.getBoundingClientRect();return{r,kx:W/(r.width||W),ky:H/(r.height||H)}};
+const pt=e=>{const{r,kx,ky}=sc();return{x:(e.clientX-r.left)*kx,y:(e.clientY-r.top)*ky}};
+cv.addEventListener('pointerdown',e=>{if(drag||(e.isPrimary===false))return;const p=pt(e);if(Math.abs(p.x-st.x)<100*st.s&&Math.abs(p.y-st.y)<110*st.s){const k=sc();drag={id:e.pointerId,cx:e.clientX,cy:e.clientY,ox:st.x,oy:st.y,kx:k.kx,ky:k.ky,live:false};try{cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();}});
+cv.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.cx,dy=e.clientY-drag.cy;
+  if(!drag.live){if(Math.hypot(dx,dy)<6)return;drag.live=true;drag.cx=e.clientX;drag.cy=e.clientY;return;}
+  if(!isFinite(dx)||!isFinite(dy))return;st.x=drag.ox+dx*drag.kx;st.y=drag.oy+dy*drag.ky;keepIn();draw();});
+const endDrag=e=>{if(drag&&(!e||e.pointerId===drag.id)){drag=null;keepIn();draw();}};
+['pointerup','pointercancel','lostpointercapture'].forEach(t=>cv.addEventListener(t,endDrag));
+// iOS Safari: stop the page from scrolling while a finger is dragging the crewmate
+cv.addEventListener('touchmove',e=>{if(drag)e.preventDefault();},{passive:false});
+cv.addEventListener('dblclick',()=>{st.x=W*0.5;st.y=H*0.72;keepIn();draw();});
 $('dlBtn').onclick=()=>{try{const a=document.createElement('a');a.download='hallowpeen-sus-pumpkin.png';a.href=cv.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();}catch(e){alert('Download not supported in this browser, try a screenshot!');}};
 (function(){const rb=$('recBtn');if(!rb)return;
   const ok=!!(cv.captureStream&&window.MediaRecorder);const mime=ok?['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(m=>{try{return MediaRecorder.isTypeSupported(m)}catch(e){return false}}):null;
