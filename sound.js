@@ -82,5 +82,5 @@ const FARTS={
 function fart(kind,delay){try{if(localStorage.getItem('hp_sound')==='off')return 0;}catch(e){}if(!ensure())return 0;if(ctx.state==='suspended'){try{ctx.resume()}catch(e){}}
   const t=ctx.currentTime+(delay||0);if(t<fartEnd-0.15&&kind!=='pfft'&&kind!=='sputter')kind='pfft';const f=FARTS[kind]||FARTS.pfft;
   try{const d=f(t,0.85+Math.random()*0.35);fartEnd=t+d;return d;}catch(e){return 0;}}
-window.HPS={play,fart,fartKinds:Object.keys(FARTS),isOn:()=>on,musicOn:()=>mOn&&!!mTimer};
+window.HPS={play,fart,ac:ensure,fartKinds:Object.keys(FARTS),isOn:()=>on,musicOn:()=>mOn&&!!mTimer};
 })();
