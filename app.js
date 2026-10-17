@@ -228,6 +228,7 @@ function draw(){try{const c=COLORS[st.glow];pumpkin(c);
   if(st.pose==='peeking'){ctx.save();ctx.fillStyle='#4a1a00';ctx.shadowColor=c[0];ctx.shadowBlur=20;ctx.fillRect(st.x-110*st.s,st.y-15*st.s,220*st.s,14*st.s);ctx.restore();}
   fog();leaves();vignette();text(st.top.toUpperCase(),H*0.08,c,60);text(st.bottom.toUpperCase(),H*0.93,c,52);
   ctx.save();ctx.font='bold 22px Rubik, sans-serif';ctx.textAlign='right';ctx.fillStyle='rgba(255,255,255,.75)';ctx.shadowColor=c[0];ctx.shadowBlur=8;ctx.fillText('$HPEEN',W-16,H-16);ctx.restore();}catch(e){}}
+window.HP.blank=function(glow){const g=st.glow;let url='';try{if(COLORS[glow])st.glow=glow;const c=COLORS[st.glow];pumpkin(c);fog();leaves();vignette();url=cv.toDataURL('image/png');}catch(e){}st.glow=g;draw();return url;};
 const embers=[],bursts=[];const RM=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
 function drawFx(c){if(!T)return;
   if(embers.length<25&&Math.random()<0.3)embers.push({x:W*0.2+Math.random()*W*0.6,y:H*0.85,vx:(Math.random()-.5)*0.6,vy:-(0.6+Math.random()*1.2),l:1});
