@@ -147,6 +147,6 @@ $('dlBtn').onclick=()=>{try{const a=document.createElement('a');a.download='hall
     rec.onstop=()=>{recording=false;rb.disabled=false;rb.textContent='🎥 Record 3s WebM';try{const url=URL.createObjectURL(new Blob(chunks,{type:'video/webm'}));const a=document.createElement('a');a.href=url;a.download='hallowpeen-sus-pumpkin.webm';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}catch(e){}};
     recording=true;startLoop();rb.disabled=true;rb.textContent='🔴 Recording the cake…';rec.start();setTimeout(()=>{try{rec.stop()}catch(e){recording=false}},3000);}
    catch(e){recording=false;rb.textContent='Recorder got ejected 😵 try PNG';}};})();
-$('xBtn').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('Carved my own sus pumpkin 🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.github.io/hallowpeen/');
+$('xBtn').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('Carved my own sus pumpkin 🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.com/');
 draw();if(document.fonts)document.fonts.ready.then(draw);
 })();
