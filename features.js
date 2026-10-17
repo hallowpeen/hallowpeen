@@ -67,9 +67,9 @@ function applyUnlocks(silent){safe(()=>{const m=state.mcap;const seen=store.get(
   TIERS.forEach((t,i)=>{const on=m>=t.m;
     if(t.unlock.startsWith('acc:')){const b=document.querySelector('[data-acc="'+t.unlock.slice(4)+'"]');if(b){b.disabled=!on;b.title=on?'':'Unlocks at '+fmt(t.m);}}
     if(t.unlock==='king'){document.body.classList.toggle('haunted',on);document.body.classList.toggle('king',on);}
-    if(on&&!seen.includes(t.m)){seen.push(t.m);if(!silent){setTimeout(()=>{toast('🚨 '+fmt(t.m)+' UNLOCKED! '+t.msg);confetti(40);},i*600);}}});
+    if(on&&!seen.includes(t.m)){seen.push(t.m);if(!silent){setTimeout(()=>{toast('🚨 '+fmt(t.m)+' UNLOCKED! '+t.msg);window.HP&&HP.cheer&&HP.cheer();window.HPS&&HPS.play('siren');confetti(40);},i*600);}}});
   store.set('hp_tiers',seen);
-  document.querySelectorAll('[data-lore-at]').forEach(ch=>{const at=+ch.getAttribute('data-lore-at');const on=m>=at;ch.classList.toggle('locked',!on);
+  document.querySelectorAll('[data-lore-at]').forEach(ch=>{const at=+ch.getAttribute('data-lore-at');const on=m>=at;if(on&&ch.classList.contains('locked')&&ch.dataset.init){setTimeout(()=>window.HPS&&HPS.play('creak'),900);}ch.dataset.init=1;ch.classList.toggle('locked',!on);
     const lk=ch.querySelector('.lock');if(lk)lk.textContent=on?'':'🔒 Redacted by impostor. Unlocks at '+fmt(at)+' market cap';});
   const sh=store.get('hp_holders')||[];HOLDER_TIERS.forEach(h=>{if(state.holders>=h&&!sh.includes(h)){sh.push(h);if(!silent){toast('🎃 '+nf(h)+' crewmates on the ship! It is getting tight in these vents. Ayo.');confetti(30);}}});store.set('hp_holders',sh);
   if(state.grad&&!store.get('hp_danced')){store.set('hp_danced',1);susDance();}
@@ -80,7 +80,7 @@ function susMeter(){safe(()=>{const total=state.buys!=null?state.buys+state.sell
   lb.textContent=total?(v>0.66?'DANGEROUSLY SUS 🔴 someone is twerking in electrical':v>0.5?'Pretty sus 🟠 ayo, why is it so thicc in here':v>0.34?'Kinda sus 🟡 lowkey looking at the cake':'Chill crew 🟢 everyone keeping their cake to themselves, sussy bakas')+' · '+nf(total)+' txns (1h)':'Scanning for sus activity… 👀 Stand on the scanner pad.';});}
 function susDance(){safe(()=>{confetti(50);if(RM)return;const d=document.createElement('div');d.className='dancer';d.setAttribute('aria-hidden','true');
   const cv=document.createElement('canvas');cv.width=160;cv.height=200;window.HP&&window.HP.drawCrew(cv.getContext('2d'),80,120,0.9,'thicc',window.HP.COLORS.orange,{});d.appendChild(cv);
-  document.body.appendChild(d);toast('🍑 GRADUATED! Crewmate is twerking across the screen. Avert your visor, sussy baka.');setTimeout(()=>d.remove(),7000);d.addEventListener('animationend',()=>d.remove());});}
+  document.body.appendChild(d);window.HPS&&HPS.play('brrt');toast('🍑 GRADUATED! Crewmate is twerking across the screen. Avert your visor, sussy baka.');setTimeout(()=>d.remove(),7000);d.addEventListener('animationend',()=>d.remove());});}
 
 /* ---------- live data ---------- */
 let lastBuys=null,lastPopup=0,popupQ=0,pollTimer=null,lastPoll=0;
@@ -110,7 +110,7 @@ async function poll(){
   renderLadder();susMeter();applyUnlocks(false);
 }
 function schedule(){clearTimeout(pollTimer);if(!DEMO&&!C.CA)return;pollTimer=setTimeout(async()=>{await poll();schedule();},POLL_MS);}
-setInterval(()=>{if(document.hidden||popupQ<=0)return;if(Date.now()-lastPopup<5000)return;popupQ--;lastPopup=Date.now();toast(['someone just carved a pumpkin 🎃','a crewmate just slid into the vent 🍑','ayo, another one got carved. SUSSSSS 🎃','someone just threw it back on the curve 🎃','a crewmate got caught lackin in electrical 👀','someone booked a medbay inspection 👀','a sussy baka just grabbed a slice of cake 🎂','another crewmate backed it up into the vent 🍑'][Math.floor(Math.random()*4)],'mini');},1000);
+setInterval(()=>{if(document.hidden||popupQ<=0)return;if(Date.now()-lastPopup<5000)return;popupQ--;lastPopup=Date.now();window.HPS&&HPS.play('whoosh');toast(['someone just carved a pumpkin 🎃','a crewmate just slid into the vent 🍑','ayo, another one got carved. SUSSSSS 🎃','someone just threw it back on the curve 🎃','a crewmate got caught lackin in electrical 👀','someone booked a medbay inspection 👀','a sussy baka just grabbed a slice of cake 🎂','another crewmate backed it up into the vent 🍑'][Math.floor(Math.random()*4)],'mini');},1000);
 if(DEMO)setTimeout(()=>{popupQ=Math.max(popupQ,1);},2500);
 document.addEventListener('visibilitychange',()=>{safe(()=>{document.body.classList.toggle('paused',document.hidden);
   if(!document.hidden&&(DEMO||C.CA)&&Date.now()-lastPoll>=POLL_MS){poll().then(schedule);}});});
