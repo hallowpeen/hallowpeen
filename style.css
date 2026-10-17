@@ -231,3 +231,14 @@ html body{transition:transform .8s cubic-bezier(.34,1.56,.64,1)}
 .dash-msg[hidden]{display:none}
 #dashTitle{font-size:clamp(1.6rem,6vw,2.8rem);margin:0}
 #dashSub{color:#ffb15c;margin:.3rem 0 .8rem}
+/* ===== Daily quest ===== */
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.8rem;margin-top:1rem}
+.qcard{background:#0d0500;border:2px dashed #5a2a00;border-radius:14px;padding:.7rem;display:flex;flex-direction:column;gap:.4rem;align-items:center;justify-content:center;min-height:180px}
+.qcard.got{border:2px solid #ffcc00;box-shadow:0 0 16px rgba(255,204,0,.35)}
+.qcard canvas{width:100%;height:auto;border-radius:10px}
+.qcard p{margin:0;font-weight:700;color:#ffb15c;font-size:.85rem}
+.qcard small{color:#c9a888;font-size:.75rem}
+.qlock{font-size:2.6rem}
+.quest-pumpkin{position:absolute;z-index:3;background:none;border:0;font-size:22px;cursor:pointer;padding:4px;filter:drop-shadow(0 0 6px #ff7b00);animation:qbob 2.4s ease-in-out infinite}
+.quest-pumpkin.popped{animation:hpop .5s ease-out forwards}
+@keyframes qbob{50%{transform:translateY(-4px) rotate(8deg)}}
