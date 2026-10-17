@@ -7,7 +7,7 @@ let best=0;try{best=+localStorage.getItem('hp_dash_best')||0}catch(e){}
 const P={x:110,y:GY,vy:0,ground:true,sq:0};let obs=[],candy=[],parts=[],speed=6,dist=0,cand=0,state='idle',raf=0,last=0,visible=false,spawnT=0,cT=0,t=0,shake=0,newBest=false;
 function reset(){P.y=GY;P.vy=0;P.ground=true;P.sq=0;obs=[];candy=[];parts=[];speed=6;dist=0;cand=0;spawnT=60;cT=90;t=0;shake=0;newBest=false;}
 function score(){return Math.floor(dist/10)+cand*5;}
-function jump(){if(state!=='play'){start();return;}if(P.ground){P.vy=-15.5;P.ground=false;P.sq=-0.25;snd('pop');}}
+function jump(){visible=true;if(state!=='play'){start();return;}if(P.ground){P.vy=-15.5;P.ground=false;P.sq=-0.25;snd('pop');}}
 function start(){reset();state='play';snd('whoosh');$('dashMsg').hidden=true;loop();}
 function over(){state='over';shake=12;snd('bonk');const s=score();if(s>best){best=s;newBest=true;try{localStorage.setItem('hp_dash_best',best)}catch(e){}setTimeout(()=>snd('siren'),300);}
   $('dashMsg').hidden=false;$('dashTitle').textContent=newBest?'NEW HIGH SCORE, SUSSY BAKA 🏆':'YOU GOT VENTED 💀';$('dashSub').textContent='Score '+s+' · best '+best+' · tap / space to retry';
@@ -51,7 +51,7 @@ function onScreen(){if(visible)return true;const r=cv.getBoundingClientRect();re
 function frame(now){raf=0;if(state!=='play')return;if(!onScreen()||document.hidden){state='paused';$('dashMsg').hidden=false;$('dashTitle').textContent='Paused (you looked away, sus)';$('dashSub').textContent='tap / space to resume';return;}
   if(now-last>=30){last=now;step();if(state!=='play')return;draw();}raf=requestAnimationFrame(frame);}
 function loop(){if(!raf)raf=requestAnimationFrame(frame);}
-function resume(){if(state==='paused'){state='play';$('dashMsg').hidden=true;loop();return true;}return false;}
+function resume(){visible=true;if(state==='paused'){state='play';$('dashMsg').hidden=true;loop();return true;}return false;}
 cv.addEventListener('pointerdown',e=>{e.preventDefault();if(!resume())jump();});
 $('dashShare').addEventListener('pointerdown',e=>e.stopPropagation());
 $('dashMsg').addEventListener('pointerdown',e=>{e.preventDefault();if(!resume())jump();});
