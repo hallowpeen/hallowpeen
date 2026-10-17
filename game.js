@@ -9,7 +9,7 @@ function reset(){P.y=GY;P.vy=0;P.ground=true;P.sq=0;obs=[];candy=[];parts=[];spe
 function score(){return Math.floor(dist/10)+cand*5;}
 function jump(){visible=true;if(state!=='play'){start();return;}if(P.ground){P.vy=-15.5;P.ground=false;P.sq=-0.25;snd('pop');}}
 function start(){reset();state='play';snd('whoosh');$('dashMsg').hidden=true;loop();}
-function over(){state='over';shake=12;snd('bonk');const s=score();if(s>best){best=s;newBest=true;try{localStorage.setItem('hp_dash_best',best)}catch(e){}setTimeout(()=>snd('siren'),300);}
+function over(){state='over';shake=12;snd('bonk');const s=score();try{const top=JSON.parse(localStorage.getItem('hp_dash_top')||'[]');top.push({s,d:Date.now()});top.sort((a,b)=>b.s-a.s);localStorage.setItem('hp_dash_top',JSON.stringify(top.slice(0,5)));dispatchEvent(new Event('hp:board'));}catch(e){}if(s>best){best=s;newBest=true;try{localStorage.setItem('hp_dash_best',best)}catch(e){}setTimeout(()=>snd('siren'),300);}
   $('dashMsg').hidden=false;$('dashTitle').textContent=newBest?'NEW HIGH SCORE, SUSSY BAKA 🏆':'YOU GOT VENTED 💀';$('dashSub').textContent='Score '+s+' · best '+best+' · tap / space to retry';
   $('dashShare').href='https://twitter.com/intent/tweet?text='+encodeURIComponent('I scored '+s+' in Vent Dash and stayed dummy thicc the whole time 🍑🎃 $HPEEN')+'&url='+encodeURIComponent('https://hallowpeen.com/');$('dashShare').hidden=false;draw();}
 function spawn(){const r=Math.random();if(r<0.4)obs.push({k:'vent',x:W+20,y:GY+2,w:70,h:18});else if(r<0.7)obs.push({k:'pumpkin',x:W+20,y:GY-34,w:40,h:36,rot:0});else obs.push({k:'knife',x:W+20,y:GY-(Math.random()<0.5?40:120),w:56,h:14});

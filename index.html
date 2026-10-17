@@ -44,6 +44,9 @@
 <p>Run, thicc crewmate, run! Tap or press space to jump. Dodge vents, rolling pumpkins and flying knives, and grab candy. Your best: <b id="dashBest">0</b></p>
 <div class="dash-wrap"><canvas id="dash" width="800" height="320" role="img" aria-label="Vent Dash game. Tap or press space to jump."></canvas>
 <div id="dashMsg" class="dash-msg"><p id="dashTitle" class="glow">TAP TO START</p><p id="dashSub">tap / space to jump · stay sus</p><a id="dashShare" class="btn small" href="#" target="_blank" rel="noopener" hidden>𝕏 Share score</a></div></div></section>
+<section id="board-sec"><h2 class="glow">Local Leaderboards</h2><p class="small-note" id="boardNote">📱 Device-only: these scores live in this browser and are never uploaded.</p>
+<div class="boards"><div class="board card"><h3 id="bDashH">Vent Dash Top 5</h3><ol id="boardDash"></ol></div>
+<div class="board card"><h3 id="bBonkH">Pumpkin Bonks</h3><ul id="boardBonk"></ul></div></div></section>
 <section id="quest-sec"><h2 class="glow">Daily Halloween Quest</h2>
 <p id="questStatus"></p><div id="questGrid" class="qgrid"></div></section>
 <section id="gallery-sec"><h2 class="glow">Crew Carvings</h2>
@@ -107,4 +110,5 @@ tick();setInterval(tick,1000);
 document.getElementById('copy').onclick=async e=>{const txt=document.getElementById('ca').textContent;
 try{await navigator.clipboard.writeText(txt)}catch(_){}e.target.textContent='Copied!';setTimeout(()=>e.target.textContent='Copy',1500)};
 </script><div id="toasts" class="toasts" aria-live="polite"></div><div class="night-ghost" aria-hidden="true">👻</div>
-<script src="sound.js"></script><script src="app.js"></script><script src="features.js"></script><script src="motion.js"></script><script src="extras.js"></script><script src="game.js"></script><script src="quest.js"></script></body></html>
+<script src="sound.js"></script><script src="app.js"></script><script src="features.js"></script><script src="motion.js"></script><script src="extras.js"></script><script src="game.js"></script><script src="quest.js"></script>
+<script src="board.js"></script></body></html>
