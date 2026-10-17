@@ -46,8 +46,8 @@ safe(()=>{const seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','Ar
 /* 4. hero pumpkin bonks */
 safe(()=>{const w=document.querySelector('.logo-wrap');if(!w)return;let n=ls.get('hp_bonks',0)|0;
   const r=document.createElement('span');r.className='react';r.setAttribute('aria-hidden','true');w.appendChild(r);
-  const ctr=document.createElement('p');ctr.className='bonks';const show=()=>{ctr.textContent=n?('🎃 you bonked the pumpkin '+n+'x. it remembers.'):'psst: bonk the pumpkin';};show();w.after(ctr);
+  const ctr=document.createElement('p');ctr.className='bonks';const show=()=>{ctr.textContent=n?('🎃 you bonked the pumpkin '+n+'x. it remembers.'):'psst: poke the pumpkin 💨';};show();w.after(ctr);
   const faces=['😑','😏','😱','🥴','😳','🤨'];
   w.addEventListener('click',()=>{n++;ls.set('hp_bonks',n);show();const f=n%10===0?'🤯':faces[Math.floor(Math.random()*faces.length)];r.textContent=f;r.classList.remove('go');void r.offsetWidth;r.classList.add('go');
-    w.classList.remove('bonked');void w.offsetWidth;w.classList.add('bonked');snd('bonk');if(n%10===0)toast('🤯 '+n+' bonks?! The pumpkin is filing a report.','mini');});});
+    w.classList.remove('bonked');void w.offsetWidth;w.classList.add('bonked');if(n%10===0)toast('🤯 '+n+' bonks?! The pumpkin is filing a report.','mini');});});
 })();

@@ -288,3 +288,25 @@ html,body{overflow-x:clip}
  .hunt-badge .lbl{display:none}
  .toasts{bottom:66px}
 }
+/* ===== hero pumpkin toot (fart.js) ===== */
+.logo-wrap{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.logo-wrap.farting .logo{animation:fartsquash .75s cubic-bezier(.3,.7,.4,1);transform-origin:50% 85%}
+@keyframes fartsquash{0%{transform:none}15%{transform:scale(1.06,.9) translateY(7px)}22%{transform:scale(1.08,.88) translateY(9px) rotate(-1deg)}34%{transform:scale(.93,1.1) translate(7px,-9px) rotate(4deg)}52%{transform:scale(1.04,.96) translate(-2px,0) rotate(-2deg)}70%{transform:scale(.99,1.02) rotate(1deg)}86%{transform:scale(1.005,.995)}100%{transform:none}}
+.fart{position:absolute;width:0;height:0;z-index:5;pointer-events:none}
+.fart-drift{position:absolute;left:0;top:0;transform-origin:0 0;animation:fartdrift 2.5s cubic-bezier(.45,.05,.55,.95) both}
+@keyframes fartdrift{0%{transform:scale(var(--s));opacity:1}24%{transform:translate(calc(var(--L)*-.025*var(--dx)),calc(var(--L)*-.03)) scale(calc(var(--s)*1.04));opacity:1}60%{opacity:.9}100%{transform:translate(calc(var(--L)*-.14*var(--dx)),calc(var(--L)*-.36)) scale(calc(var(--s)*1.5)) rotate(-7deg);opacity:0}}
+.fart-wob{position:absolute;left:0;top:0;animation:fartwob .5s ease-in-out infinite alternate;filter:drop-shadow(2px 0 0 #2b4f0e) drop-shadow(-2px 0 0 #2b4f0e) drop-shadow(0 2px 0 #2b4f0e) drop-shadow(0 -2px 0 #2b4f0e) drop-shadow(0 0 14px rgba(140,255,60,.45))}
+@keyframes fartwob{0%{transform:rotate(-3deg) scale(1.04,.96)}100%{transform:rotate(3deg) scale(.96,1.05)}}
+.puff{position:absolute;border-radius:50%;background:radial-gradient(circle at 36% 32%,#e6ffa6 0 5%,#b2df4c 20%,#82bc2e 46%,#5a8f1f 74%,#3a6514 100%);animation:puff .62s cubic-bezier(.25,1.4,.5,1) both}
+.puff.hl::after{content:"";position:absolute;left:22%;top:16%;width:30%;height:20%;border-radius:50%;background:rgba(255,255,255,.65);transform:rotate(-25deg)}
+@keyframes puff{0%{transform:translate(var(--tx),var(--ty)) scale(.12);opacity:0}12%{opacity:1}45%{transform:translate(0,0) scale(1.18,.88)}65%{transform:scale(.94,1.07)}82%{transform:scale(1.03,.98)}100%{transform:scale(1)}}
+.fart-stink{position:absolute;overflow:visible;opacity:0;animation:stink 1.3s ease-out both}
+.fart-stink path{fill:none;stroke:#a6e34a;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:70;stroke-dashoffset:70;animation:stinkdraw 1.3s ease-out both;animation-delay:inherit}
+@keyframes stink{0%{opacity:0;transform:translateY(8px)}20%{opacity:.95}100%{opacity:0;transform:translateY(-22px) scaleX(1.3)}}
+@keyframes stinkdraw{0%{stroke-dashoffset:70}60%,100%{stroke-dashoffset:0}}
+.fart-cap{position:absolute;left:50%;top:4%;z-index:6;pointer-events:none;white-space:nowrap;font-family:'Creepster',cursive;font-size:clamp(1.05rem,4.6vw,1.7rem);letter-spacing:.5px;color:#1a2b08;background:#d8ff8a;border:3px solid #2b4f0e;border-radius:18px;padding:.15em .6em;box-shadow:4px 5px 0 #2b4f0e;opacity:0;transform:translate(-50%,10px) scale(.3) rotate(var(--rot,-3deg))}
+.fart-cap::after{content:"";position:absolute;left:30%;bottom:-11px;border:8px solid transparent;border-top-color:#2b4f0e;border-bottom:0}
+.fart-cap.go{animation:fartcap 1.9s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes fartcap{0%{opacity:0;transform:translate(-50%,10px) scale(.3) rotate(var(--rot))}14%{opacity:1;transform:translate(-50%,-4px) scale(1.12,.92) rotate(var(--rot))}26%{transform:translate(-50%,0) scale(.97,1.04) rotate(var(--rot))}36%,80%{opacity:1;transform:translate(-50%,0) scale(1) rotate(var(--rot))}100%{opacity:0;transform:translate(-50%,-14px) scale(.9) rotate(var(--rot))}}
+@media(max-width:420px){.fart-cap{white-space:normal;width:max-content;max-width:86vw;text-align:center}}
+@media(prefers-reduced-motion:reduce){.fart-cap.go{opacity:1;transform:translate(-50%,0)}.fart-stink{display:none}}

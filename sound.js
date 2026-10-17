@@ -38,7 +38,7 @@ function ui(){const b=document.createElement('button');b.type='button';b.classNa
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ui);else ui();
 // global hooks
 document.addEventListener('pointerdown',e=>{const t=e.target.closest&&e.target.closest('button,.btn');if(!t||t.classList.contains('sound-toggle'))return;play(t.matches('.chips button')?'pop':'squish');},{passive:true});
-document.addEventListener('pointerenter',e=>{if(e.target.classList&&e.target.classList.contains('logo-wrap'))play('boing');},true);
+document.addEventListener('pointerenter',e=>{if(e.pointerType==='touch')return;if(e.target.classList&&e.target.classList.contains('logo-wrap'))play('boing');},true);
 document.addEventListener('focusin',e=>{if(e.target.classList&&e.target.classList.contains('logo-wrap'))play('boing');});
 let ghosted=false;document.addEventListener('pointerdown',()=>{if(!ghosted&&document.body.classList.contains('night')){ghosted=true;setTimeout(()=>play('ghost'),300);}},{passive:true});
 
@@ -64,5 +64,23 @@ function mui(){const b=document.createElement('button');b.type='button';b.classN
   if(mOn){const go=()=>{removeEventListener('pointerdown',go,true);removeEventListener('keydown',go,true);if(mOn)musicStart();};addEventListener('pointerdown',go,true);addEventListener('keydown',go,true);}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mui);else mui();
 document.addEventListener('visibilitychange',()=>{if(!mOn||!ctx)return;if(document.hidden)musicStop();else musicStart();});
-window.HPS={play,isOn:()=>on,musicOn:()=>mOn&&!!mTimer};
+// ===== procedural fart engine (no audio files). Plays on an explicit pumpkin tap unless the user explicitly muted (hp_sound=off). =====
+let fartEnd=0;
+function fv(t,d,f0,f1,fl,vol){const o=ctx.createOscillator();o.type='sawtooth';const st=Math.max(2,Math.floor(d/0.03));o.frequency.setValueAtTime(f0,t);
+  for(let i=1;i<=st;i++){const k=i/st;o.frequency.linearRampToValueAtTime(Math.max(30,(f0+(f1-f0)*k)*(0.84+Math.random()*0.32)),t+d*k);}
+  const am=ctx.createGain();am.gain.value=0.55;const l=ctx.createOscillator();l.type='square';l.frequency.setValueAtTime(fl,t);l.frequency.linearRampToValueAtTime(fl*(0.55+Math.random()*0.5),t+d);
+  const lg=ctx.createGain();lg.gain.value=0.45;l.connect(lg);lg.connect(am.gain);
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.Q.value=4+Math.random()*3;lp.frequency.setValueAtTime(650+Math.random()*550,t);lp.frequency.linearRampToValueAtTime(320,t+d);
+  const g=ctx.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.022);g.gain.setValueAtTime(vol,t+d*0.72);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+  o.connect(am);am.connect(lp);lp.connect(g);g.connect(master);o.start(t);l.start(t);o.stop(t+d+0.05);l.stop(t+d+0.05);}
+const FARTS={
+ pfft(t,k){fv(t,0.16+Math.random()*0.1,210*k,140*k,55,0.5);noise(0.22,0.22,'bandpass',1300,500,t-ctx.currentTime);return 0.3;},
+ brrap(t,k){const d=0.55+Math.random()*0.4;fv(t,d,95*k,62*k,26+Math.random()*10,0.65);noise(d,0.08,'bandpass',420,220,t-ctx.currentTime);return d;},
+ sputter(t,k){let o=0,f=150*k;const n=3+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const d=0.07+Math.random()*0.1;fv(t+o,d,f,f*0.8,40+Math.random()*25,0.55);o+=d+0.035+Math.random()*0.08;f*=0.86;}return o;},
+ squeaker(t,k){fv(t,0.5,250*k,430*k,72,0.38);fv(t+0.48,0.16,430*k,190*k,60,0.36);return 0.66;},
+ tuba(t,k){fv(t,1.05,72*k,46*k,19,0.72);fv(t+1.02,0.12,180*k,120*k,55,0.4);return 1.15;}};
+function fart(kind,delay){try{if(localStorage.getItem('hp_sound')==='off')return 0;}catch(e){}if(!ensure())return 0;if(ctx.state==='suspended'){try{ctx.resume()}catch(e){}}
+  const t=ctx.currentTime+(delay||0);if(t<fartEnd-0.15&&kind!=='pfft'&&kind!=='sputter')kind='pfft';const f=FARTS[kind]||FARTS.pfft;
+  try{const d=f(t,0.85+Math.random()*0.35);fartEnd=t+d;return d;}catch(e){return 0;}}
+window.HPS={play,fart,fartKinds:Object.keys(FARTS),isOn:()=>on,musicOn:()=>mOn&&!!mTimer};
 })();
