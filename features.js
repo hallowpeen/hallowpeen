@@ -14,13 +14,13 @@ const fmt=n=>n>=1e9?'$'+(n/1e9).toFixed(1)+'B':n>=1e6?'$'+(n/1e6).toFixed(n>=1e7
 const nf=n=>Number(n).toLocaleString('en-US');
 
 const TIERS=[
- {m:1e4,name:'Sus Vampire',unlock:'acc:cape',msg:'Bro vented in a cape. 🧛 Vampire Cape unlocked in the carver!'},
- {m:5e4,name:'Already Dead',unlock:'acc:ghost',msg:'Got killed in electrical, still doing tasks. 👻 Ghost Sheet unlocked!'},
- {m:1e5,name:'Emergency Meeting',unlock:'acc:hat',msg:'EMERGENCY MEETING: the crew hit $100K! 🧙 Witch Hat + Lore Ch. 3 unlocked!'},
- {m:5e5,name:'Golden Sus',unlock:'acc:golden',msg:'✨ Golden Crewmate unlocked. Shiny AND sus. Dangerous combo.'},
+ {m:1e4,name:'Sus Vampire',unlock:'acc:cape',msg:'🧛 Vampire Cape unlocked. Covers the cake. Barely.'},
+ {m:5e4,name:'Already Dead',unlock:'acc:ghost',msg:'👻 Ghost Sheet unlocked. Died in electrical, still out here throwing it back.'},
+ {m:1e5,name:'Emergency Meeting',unlock:'acc:hat',msg:'EMERGENCY MEETING: the crew hit $100K and someone saw what Orange was doing in the vents. 🧙 Witch Hat + Lore Ch. 3 unlocked!'},
+ {m:5e5,name:'Golden Sus',unlock:'acc:golden',msg:'✨ Golden Crewmate unlocked. Buns of gold, passed medbay inspection with flying colors.'},
  {m:1e6,name:'Pumpkin King',unlock:'king',msg:'👑 ALL HAIL THE PUMPKIN KING. The site got haunted. Who did this?? (it was red)'},
- {m:5e6,name:'Diamond Visor',unlock:'acc:diamond',msg:'💎 Diamond Crewmate + Lore Ch. 5 unlocked. Ayo, that visor is SUSSSSS.'},
- {m:1e7,name:'Victory Screen',unlock:'legend',msg:'🏆 VICTORY. Crewmates win. Every carver item unlocked. The impostor is still among us tho.'}];
+ {m:5e6,name:'Diamond Visor',unlock:'acc:diamond',msg:'💎 Diamond Crewmate + Lore Ch. 5 unlocked. Rock hard visor. We said VISOR.'},
+ {m:1e7,name:'Victory Screen',unlock:'legend',msg:'🏆 VICTORY. Every carver item unlocked. The crew is officially dummy thicc.'}];
 const HOLDER_TIERS=[100,1000,10000];
 
 /* ---------- toast + confetti (capped, auto-cleanup, lazy) ---------- */
@@ -71,16 +71,16 @@ function applyUnlocks(silent){safe(()=>{const m=state.mcap;const seen=store.get(
   store.set('hp_tiers',seen);
   document.querySelectorAll('[data-lore-at]').forEach(ch=>{const at=+ch.getAttribute('data-lore-at');const on=m>=at;ch.classList.toggle('locked',!on);
     const lk=ch.querySelector('.lock');if(lk)lk.textContent=on?'':'🔒 Redacted by impostor. Unlocks at '+fmt(at)+' market cap';});
-  const sh=store.get('hp_holders')||[];HOLDER_TIERS.forEach(h=>{if(state.holders>=h&&!sh.includes(h)){sh.push(h);if(!silent){toast('🎃 '+nf(h)+' crewmates on the ship! Someone check the vents, it is getting crowded.');confetti(30);}}});store.set('hp_holders',sh);
+  const sh=store.get('hp_holders')||[];HOLDER_TIERS.forEach(h=>{if(state.holders>=h&&!sh.includes(h)){sh.push(h);if(!silent){toast('🎃 '+nf(h)+' crewmates on the ship! It is getting tight in these vents. Ayo.');confetti(30);}}});store.set('hp_holders',sh);
   if(state.grad&&!store.get('hp_danced')){store.set('hp_danced',1);susDance();}
 });}
 function susMeter(){safe(()=>{const total=state.buys!=null?state.buys+state.sells:0;const el=$('susNeedle'),lb=$('susLabel');if(!el)return;
   let v=0.5;if(total>0)v=state.buys/total;
   el.style.transform='rotate('+(-90+v*180)+'deg)';
-  lb.textContent=total?(v>0.66?'DANGEROUSLY SUS 🔴 (red sus)':v>0.5?'Pretty sus 🟠 ayo':v>0.34?'Kinda sus 🟡 keep an eye on him':'Chill crew 🟢 nobody vented')+' · '+nf(total)+' txns (1h)':'Scanning for sus activity… 👀 Stand on the scanner pad.';});}
+  lb.textContent=total?(v>0.66?'DANGEROUSLY SUS 🔴 someone is twerking in electrical':v>0.5?'Pretty sus 🟠 ayo, why is it so thicc in here':v>0.34?'Kinda sus 🟡 lowkey looking at the cake':'Chill crew 🟢 everyone keeping their cake to themselves, sussy bakas')+' · '+nf(total)+' txns (1h)':'Scanning for sus activity… 👀 Stand on the scanner pad.';});}
 function susDance(){safe(()=>{confetti(50);if(RM)return;const d=document.createElement('div');d.className='dancer';d.setAttribute('aria-hidden','true');
-  const cv=document.createElement('canvas');cv.width=160;cv.height=200;window.HP&&window.HP.drawCrew(cv.getContext('2d'),80,120,1,'waving',window.HP.COLORS.orange,{});d.appendChild(cv);
-  document.body.appendChild(d);toast('🕺 GRADUATED! Crewmate is hitting the sus dance. You were not the impostor.');setTimeout(()=>d.remove(),7000);d.addEventListener('animationend',()=>d.remove());});}
+  const cv=document.createElement('canvas');cv.width=160;cv.height=200;window.HP&&window.HP.drawCrew(cv.getContext('2d'),80,120,0.9,'thicc',window.HP.COLORS.orange,{});d.appendChild(cv);
+  document.body.appendChild(d);toast('🍑 GRADUATED! Crewmate is twerking across the screen. Avert your visor, sussy baka.');setTimeout(()=>d.remove(),7000);d.addEventListener('animationend',()=>d.remove());});}
 
 /* ---------- live data ---------- */
 let lastBuys=null,lastPopup=0,popupQ=0,pollTimer=null,lastPoll=0;
@@ -110,7 +110,7 @@ async function poll(){
   renderLadder();susMeter();applyUnlocks(false);
 }
 function schedule(){clearTimeout(pollTimer);if(!DEMO&&!C.CA)return;pollTimer=setTimeout(async()=>{await poll();schedule();},POLL_MS);}
-setInterval(()=>{if(document.hidden||popupQ<=0)return;if(Date.now()-lastPopup<5000)return;popupQ--;lastPopup=Date.now();toast(['someone just carved a pumpkin 🎃','a crewmate just vented in 🎃','ayo, another pumpkin carved. SUSSSS 🎃','someone finished their task: buy $HPEEN 🎃'][Math.floor(Math.random()*4)],'mini');},1000);
+setInterval(()=>{if(document.hidden||popupQ<=0)return;if(Date.now()-lastPopup<5000)return;popupQ--;lastPopup=Date.now();toast(['someone just carved a pumpkin 🎃','a crewmate just slid into the vent 🍑','ayo, another one got carved. SUSSSSS 🎃','someone just threw it back on the curve 🎃','a crewmate got caught lackin in electrical 👀','someone booked a medbay inspection 👀','a sussy baka just grabbed a slice of cake 🎂','another crewmate backed it up into the vent 🍑'][Math.floor(Math.random()*4)],'mini');},1000);
 if(DEMO)setTimeout(()=>{popupQ=Math.max(popupQ,1);},2500);
 document.addEventListener('visibilitychange',()=>{safe(()=>{document.body.classList.toggle('paused',document.hidden);
   if(!document.hidden&&(DEMO||C.CA)&&Date.now()-lastPoll>=POLL_MS){poll().then(schedule);}});});
@@ -121,15 +121,15 @@ safe(()=>{const n=new Date();if((n.getMonth()===9&&n.getDate()===31)||qs.get('ni
 /* ---------- gallery ---------- */
 safe(()=>{const g=$('gallery'),f=$('featured');if(!g)return;const list=(C.GALLERY||[]).filter(u=>typeof u==='string'&&u);
   if(C.FEATURED){f.innerHTML='';const im=new Image();im.loading='lazy';im.alt='Featured community carving';im.src=C.FEATURED;im.onerror=()=>{f.textContent='Featured carving got ejected. Coming back soon 🎃';};f.appendChild(im);}
-  if(!list.length){g.innerHTML='<p class="empty">No carvings yet. Sus. Share yours on X with <b>$HPEEN</b> to get featured 🎃</p>';return;}
+  if(!list.length){g.innerHTML='<p class="empty">No carvings yet. Don\'t be shy, show us your pumpkin. Share yours on X with <b>$HPEEN</b> to get featured 🎃</p>';return;}
   g.innerHTML='';list.slice(0,24).forEach(u=>{const im=new Image();im.loading='lazy';im.alt='Community carving';im.src=u;im.onerror=()=>im.remove();g.appendChild(im);});});
 
 /* ---------- sticker pack (generated lazily on first view) ---------- */
 function makeStickers(){safe(()=>{const wrap=$('stickers');if(!wrap||wrap.dataset.done)return;wrap.dataset.done=1;const HP=window.HP;if(!HP)return;
   const S=512;const items=[
    ['Pumpkin PFP',c=>{const img=document.querySelector('.logo');c.fillStyle='#050505';c.fillRect(0,0,S,S);c.save();c.beginPath();c.arc(S/2,S/2,S/2-8,0,7);c.clip();if(img&&img.complete&&img.naturalWidth)c.drawImage(img,0,0,S,S);c.restore();c.strokeStyle='#ff7b00';c.lineWidth=10;c.shadowColor='#ff7b00';c.shadowBlur=25;c.beginPath();c.arc(S/2,S/2,S/2-10,0,7);c.stroke();}],
-   ['Not The Impostor',c=>HP.drawCrew(c,S/2,S*0.58,2.4,'standing',HP.COLORS.orange,{})],
-   ['Green Sus Side-eye',c=>HP.drawCrew(c,S/2,S*0.58,2.4,'sus',HP.COLORS.green,{})],
+   ['Dummy Thicc',c=>HP.drawCrew(c,S/2,S*0.58,2.4,'thicc',HP.COLORS.orange,{})],
+   ['Over the Shoulder',c=>HP.drawCrew(c,S/2,S*0.6,2.4,'shoulder',HP.COLORS.green,{})],
    ['Witchy Wave',c=>HP.drawCrew(c,S/2,S*0.66,2.0,'waving',HP.COLORS.purple,{hat:true})],
    ['Pumpkin King',c=>HP.drawCrew(c,S/2,S*0.66,2.1,'standing',HP.SPECIAL.golden,{crown:true})],
    ['$HPEEN Badge',c=>{c.fillStyle='#120700';c.beginPath();c.arc(S/2,S/2,S/2-12,0,7);c.fill();c.strokeStyle='#ff7b00';c.lineWidth=14;c.shadowColor='#ff7b00';c.shadowBlur=30;c.stroke();

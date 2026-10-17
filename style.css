@@ -111,9 +111,9 @@ body.haunted .card,body.haunted .steps li,body.haunted .chapters article{border-
 .confetti{position:fixed;top:-40px;z-index:60;pointer-events:none;animation:fall 3s linear forwards;will-change:transform}
 @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
 .dancer{position:fixed;bottom:10px;left:-180px;z-index:55;pointer-events:none;animation:dance 6s linear forwards}
-.dancer canvas{width:120px;height:150px;animation:bop .4s ease-in-out infinite alternate}
+.dancer canvas{width:120px;height:150px;transform-origin:30% 80%;animation:bop .22s ease-in-out infinite alternate}
 @keyframes dance{to{left:calc(100vw + 20px)}}
-@keyframes bop{from{transform:rotate(-12deg) translateY(0)}to{transform:rotate(12deg) translateY(-20px)}}
+@keyframes bop{0%{transform:rotate(-6deg) scaleY(1)}50%{transform:rotate(6deg) scaleY(.88) translateY(8px)}100%{transform:rotate(-4deg) scaleY(1.04)}}
 .night-ghost{display:none}
 body.night .night-ghost{display:block;position:fixed;right:4vw;top:30vh;font-size:56px;z-index:5;pointer-events:none;opacity:.8;animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 12px #fff)}
 body.night .glow{animation:flicker 4s infinite}
@@ -122,3 +122,76 @@ body.night .glow{animation:flicker 4s infinite}
 body.paused *,body.paused *::before{animation-play-state:paused!important}
 @media(max-width:480px){.stats{grid-template-columns:1fr}.stickers{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.confetti,.dancer{display:none}}
+
+.demo-banner[hidden]{display:none}
+@keyframes jiggle{0%,100%{transform:scale(1,1)}15%{transform:scale(1.04,.95)}30%{transform:scale(.97,1.04)}45%{transform:scale(1.02,.98)}60%{transform:scale(.99,1.01)}}
+#carve.jiggle{animation:jiggle .9s ease-out 2}
+.logo-wrap{cursor:pointer;outline:none}
+.boing{position:absolute;right:-10px;top:48%;z-index:3;font-family:'Creepster',cursive;font-size:clamp(1.4rem,5vw,2.4rem);color:#ffcc00;text-shadow:0 0 12px #ff7b00;opacity:0;transform:scale(.4) rotate(-12deg);transition:.2s;pointer-events:none}
+.logo-wrap:hover .boing,.logo-wrap:focus .boing,.logo-wrap:active .boing{opacity:1;transform:scale(1) rotate(-12deg)}
+.logo-wrap:hover .logo,.logo-wrap:focus .logo,.logo-wrap:active .logo{animation:boing .6s ease-in-out 2}
+@keyframes boing{0%,100%{transform:scale(1,1)}20%{transform:scale(1.08,.9) rotate(-2deg)}40%{transform:scale(.94,1.06) rotate(2deg)}60%{transform:scale(1.04,.96)}80%{transform:scale(.98,1.02)}}
+.dancer canvas{animation:bop .22s ease-in-out infinite alternate,jiggle .45s ease-in-out infinite}
+.tagline small{display:block;font-size:.8rem;color:#c9a888}
+
+@keyframes shake{0%,100%{transform:translate(0,0)}20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,-1px)}80%{transform:translate(2px,1px)}}
+.hero:has(.logo-wrap:hover),.hero:has(.logo-wrap:focus){animation:shake .35s ease-in-out 2}
+#recBtn[hidden]{display:none}
+/* ===== v7 site-wide motion (CSS-first) ===== */
+.reveal{opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s ease var(--d,0ms),transform .7s cubic-bezier(.34,1.56,.64,1) var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+.hero h1 .ltr{display:inline-block;animation:drip 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*.12s)}
+@keyframes drip{0%,70%,100%{transform:translateY(0) rotate(0)}78%{transform:translateY(6px) rotate(-4deg) scaleY(1.08)}86%{transform:translateY(-3px) rotate(3deg)}}
+h2.glow{transition:transform .3s}h2.glow:hover{animation:wob .6s ease-in-out}
+@keyframes wob{25%{transform:rotate(-3deg) scale(1.05)}50%{transform:rotate(2deg) scale(.98)}75%{transform:rotate(-1deg)}}
+nav a{display:inline-block;transition:transform .15s}nav a:hover{animation:jig .4s ease-in-out}
+@keyframes jig{25%{transform:rotate(-8deg) translateY(-2px)}50%{transform:rotate(6deg) scaleX(1.1)}75%{transform:rotate(-3deg)}}
+.btn,.ca button,.chips button{transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,background .2s}
+.btn:hover,.ca button:hover,.chips button:not(:disabled):hover{transform:translateY(-3px) scale(1.06,.96)}
+.btn:active,.ca button:active,.chips button:not(:disabled):active{transform:scale(.9,1.08)}
+.countdown span.flip{animation:flip .45s ease-out}
+@keyframes flip{0%{transform:rotateX(90deg);opacity:.3}60%{transform:rotateX(-15deg)}100%{transform:none;opacity:1}}
+.mbar{position:relative;overflow:hidden}
+.mbar::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-100%);animation:shim 2.2s ease-in-out infinite}
+@keyframes shim{to{transform:translateX(100%)}}
+.chapters article.locked{cursor:pointer}
+.chapters article.shake{animation:shk .5s ease-in-out}
+@keyframes shk{20%{transform:translateX(-8px) rotate(-2deg)}40%{transform:translateX(8px) rotate(2deg)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+.sticker{transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
+.sticker:hover{transform:perspective(600px) rotateY(-10deg) rotateX(6deg) scale(1.04);box-shadow:0 0 22px rgba(255,120,0,.5)}
+#tokenomics .card.in{animation:flt 4s ease-in-out infinite}
+#tokenomics .card:nth-child(2).in{animation-delay:-1s}#tokenomics .card:nth-child(3).in{animation-delay:-2s}#tokenomics .card:nth-child(4).in{animation-delay:-3s}
+@keyframes flt{50%{transform:translateY(-8px)}}
+.peeker{position:fixed;width:70px;height:88px;z-index:40;pointer-events:none;opacity:0}
+.peeker.from-left{left:-80px}.peeker.from-right{right:-80px;transform:scaleX(-1)}.peeker.from-bottom{bottom:-100px}
+.peeker.go.from-left{animation:peekL 3s ease-in-out}.peeker.go.from-right{animation:peekR 3s ease-in-out}.peeker.go.from-bottom{animation:peekB 3s ease-in-out}
+@keyframes peekL{0%,100%{opacity:1;transform:translateX(0)}30%,70%{opacity:1;transform:translateX(65px) rotate(12deg)}}
+@keyframes peekR{0%,100%{opacity:1;transform:scaleX(-1) translateX(0)}30%,70%{opacity:1;transform:scaleX(-1) translateX(65px) rotate(12deg)}}
+@keyframes peekB{0%,100%{opacity:1;transform:translateY(0)}30%,70%{opacity:1;transform:translateY(-80px) rotate(-8deg)}}
+.trail{position:fixed;z-index:70;pointer-events:none;font-size:14px;opacity:0;transform:translate(-50%,-50%)}
+.trail.go{animation:trl .8s ease-out forwards}
+@keyframes trl{0%{opacity:.9;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,20px) scale(.4) rotate(90deg)}}
+.foot-crew{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:1rem;color:#ffb15c;font-size:.8rem}
+.foot-crew img{width:44px;height:55px;transform-origin:40% 90%}
+.foot-crew.live img{animation:lazytwerk 1.6s ease-in-out infinite}
+@keyframes lazytwerk{0%,60%,100%{transform:none}68%{transform:scaleY(.88) rotate(4deg)}76%{transform:scaleY(1.04) rotate(-3deg)}84%{transform:scaleY(.9) rotate(3deg)}92%{transform:none}}
+@keyframes tin{0%{opacity:0;transform:translateX(-60px) scale(.8)}60%{opacity:1;transform:translateX(8px) scale(1.04)}80%{transform:translateX(-3px)}100%{transform:none}}
+.needle{animation:nw 2.4s ease-in-out infinite}
+@keyframes nw{0%,100%{rotate:-3deg}50%{rotate:3deg}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}.peeker,.trail{display:none}}
+/* ===== v8 polish: a11y + mobile ===== */
+.skip{position:absolute;left:-999px;top:8px;z-index:100;background:#ff7b00;color:#000;padding:.6rem 1rem;border-radius:8px;font-weight:700}
+.skip:focus{left:8px}
+a:focus-visible,button:focus-visible,input:focus-visible,.logo-wrap:focus-visible,[tabindex]:focus-visible{outline:3px solid #ffcc00;outline-offset:3px;border-radius:6px}
+.logo-wrap:focus-visible{border-radius:50%}
+.chapters article.locked:focus-visible{outline:3px solid #ffcc00}
+@media(max-width:600px){
+  nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:1rem;padding:.8rem 1rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav::-webkit-scrollbar{display:none}nav a{flex:0 0 auto}
+  section{padding:3rem 1rem}
+  .hero{padding:2rem 1rem 3rem}
+  .toast{font-size:.85rem;padding:.6rem .8rem}
+  .ca code{font-size:.9rem}
+  .boing{right:0}
+}
+html{scroll-padding-top:64px}
