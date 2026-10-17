@@ -29,6 +29,13 @@ safe(()=>{if(RM||!sprite)return;const el=document.createElement('img');el.src=sp
 // 6. cursor pumpkin trail (desktop / fine pointer only, pooled)
 safe(()=>{if(RM||!matchMedia('(pointer: fine)').matches)return;const pool=[];for(let i=0;i<8;i++){const s=document.createElement('span');s.className='trail';s.textContent=i%3?'🎃':'🍑';s.setAttribute('aria-hidden','true');document.body.appendChild(s);pool.push(s);}
   let k=0,last=0;addEventListener('mousemove',e=>{const n=e.timeStamp;if(n-last<60||document.hidden)return;last=n;const s=pool[k++%pool.length];s.classList.remove('go');s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';void s.offsetWidth;s.classList.add('go');},{passive:true});});
+
+// ghost-crewmate cursor: Oct 31 night mode (or ?night=1), desktop pointer only
+safe(()=>{if(RM||!document.body.classList.contains('night')||!matchMedia('(pointer: fine)').matches)return;
+  const c=document.createElement('canvas');c.width=120;c.height=150;window.HP.drawCrew(c.getContext('2d'),60,90,0.8,'standing',['#c8d0ff','#ffffff'],{ghost:true});
+  const g=document.createElement('img');g.src=c.toDataURL('image/png');g.className='ghost-cursor';g.alt='';g.width=44;g.height=55;g.setAttribute('aria-hidden','true');document.body.appendChild(g);
+  addEventListener('mousemove',e=>{g.style.transform='translate('+(e.clientX+14)+'px,'+(e.clientY+10)+'px)';g.classList.add('on');},{passive:true});
+  document.addEventListener('mouseleave',()=>g.classList.remove('on'));});
 // 7. footer twerker (animates only when footer visible)
 safe(()=>{const f=document.querySelector('footer');if(!f||!sprite)return;const w=document.createElement('div');w.className='foot-crew';w.innerHTML='<img alt="" aria-hidden="true" width="44" height="55"><span>certified thicc. 🍑 do not report.</span>';w.querySelector('img').src=sprite;f.prepend(w);
   if('IntersectionObserver' in window)new IntersectionObserver(es=>w.classList.toggle('live',es[0].isIntersecting&&!RM)).observe(w);});

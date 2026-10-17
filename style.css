@@ -242,3 +242,8 @@ html body{transition:transform .8s cubic-bezier(.34,1.56,.64,1)}
 .quest-pumpkin{position:absolute;z-index:3;background:none;border:0;font-size:22px;cursor:pointer;padding:4px;filter:drop-shadow(0 0 6px #ff7b00);animation:qbob 2.4s ease-in-out infinite}
 .quest-pumpkin.popped{animation:hpop .5s ease-out forwards}
 @keyframes qbob{50%{transform:translateY(-4px) rotate(8deg)}}
+.music-toggle{bottom:60px}
+@media(max-width:600px){.music-toggle{top:100px;bottom:auto}}
+.ghost-cursor{position:fixed;left:0;top:0;width:44px;height:55px;z-index:90;pointer-events:none;opacity:0;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .3s;filter:drop-shadow(0 0 10px #cfd8ff)}
+.ghost-cursor.on{opacity:.85;animation:gfloat 2s ease-in-out infinite}
+@keyframes gfloat{50%{margin-top:-6px}}
