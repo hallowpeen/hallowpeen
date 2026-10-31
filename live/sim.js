@@ -626,7 +626,7 @@ function chrome(){const sb=document.getElementById('sndBtn');if(sb){const set=()
   if(!r.ok){out.textContent='❌ '+r.why;if(x)x.hidden=true;return;}
   queueName(r.name);
   if(HOST){out.textContent='✅ queued: '+r.name+' (the next new crewmate gets this name)';}
-  else{onBuy();out.textContent='✅ '+r.name+' just moved in on YOUR screen. Want it on the stream? Post it with #HPEEN so the host can add it.';
+  else{onBuy();out.textContent='✅ '+r.name+' just moved in on YOUR screen. Share it with #HPEEN if you want the crew to see the name!';
    if(x){x.hidden=false;x.href='https://x.com/intent/tweet?text='+encodeURIComponent('Name my $HPEEN crewmate "'+r.name+'" 🎃👀 #HPEEN https://hallowpeen.com/live/');}}
   inp.value='';});
  const hp=document.getElementById('hostPanel');if(hp&&HOST&&!OBS){hp.hidden=false;const ci=document.getElementById('cmdIn');const cf=document.getElementById('cmdForm');if(cf)cf.addEventListener('submit',e=>{e.preventDefault();showCmdResult(command(ci.value,'host'));ci.value='';});

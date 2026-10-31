@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HallowPeen LIVE: Spooky Neighborhood 🎃 ($HPEEN)</title>
-<meta name="description" content="Watch the HallowPeen Spooky Neighborhood live: sus crewmates doing Halloween tasks, a hidden impostor, emergency meetings. Every $HPEEN buy moves a new crewmate into the neighborhood.">
+<title>24/7 HallowPeen TV 🎃 ($HPEEN)</title>
+<meta name="description" content="24/7 HallowPeen TV: an always-on animated cartoon channel. Sus crewmates do Halloween tasks in a haunted cul-de-sac. Every real $HPEEN buy moves a new crewmate in.">
 <meta name="theme-color" content="#050505"><link rel="canonical" href="https://hallowpeen.com/live/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://hallowpeen.com/live/"><meta property="og:title" content="HallowPeen LIVE: Spooky Neighborhood 🎃">
-<meta property="og:description" content="Sus crewmates, one hidden impostor, a whole haunted cul-de-sac. Every $HPEEN buy moves a new crewmate in."><meta property="og:image" content="https://hallowpeen.com/og.jpg">
+<meta property="og:type" content="website"><meta property="og:url" content="https://hallowpeen.com/live/"><meta property="og:title" content="24/7 HallowPeen TV 🎃">
+<meta property="og:description" content="Always-on animated HallowPeen TV. Sus crewmates, one hidden impostor, a haunted cul-de-sac. Real $HPEEN buys move crewmates in."><meta property="og:image" content="https://hallowpeen.com/og.jpg">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://hallowpeen.com/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
@@ -12,17 +12,43 @@
 <link rel="stylesheet" href="sim.css">
 <script>if(/[?&]obs=1\b/.test(location.search))document.documentElement.className="obs";</script></head>
 <body>
-<nav class="bar" aria-label="Live page">
+<nav class="bar" aria-label="HallowPeen TV">
 <a class="home" href="/">🎃 HallowPeen</a>
-<span class="onair"><i></i>LIVE</span>
-<span class="ttl">Spooky Neighborhood</span>
+<span class="onair"><i></i>ON AIR 24/7</span>
+<span class="ttl">HallowPeen TV</span>
+<span class="chbug" title="channel">🎃 CH-PEEN</span>
 <span class="sp"></span>
 <button type="button" id="sndBtn" aria-pressed="false">🔇 sound: off, coward</button>
 <button type="button" id="fsBtn">⛶ Fullscreen</button>
 <a id="demoLink" href="?demo=1">🧪 Demo mode</a>
 </nav>
 <main>
-<div class="stage" id="stage"><canvas id="sim" width="1280" height="720" role="img" aria-label="Live cartoon simulation: crewmates doing Halloween tasks in a spooky neighborhood while a hidden impostor stalks them"></canvas></div>
+<div class="tv-frame">
+<div class="stage" id="stage">
+<canvas id="sim" width="1280" height="720" role="img" aria-label="Animated HallowPeen TV show: crewmates doing Halloween tasks in a spooky neighborhood while a hidden impostor stalks them"></canvas>
+<div class="tv-chrome" aria-hidden="true">
+  <div class="tv-bug">🎃 HPEEN · CH-01</div>
+  <div class="tv-onair"><i></i>ON AIR 24/7</div>
+  <div class="tv-now"><span class="lbl">NOW PLAYING</span> <span id="nowPlaying">Spooky Neighborhood</span></div>
+</div>
+</div>
+<div class="tv-ticker" aria-hidden="true"><div class="tv-ticker-track" id="tickerTrack">
+  <span>🎃 AYO SUSSSSS!</span>
+  <span>🎬 Animated show · always on</span>
+  <span>Every real $HPEEN buy moves a new crewmate in</span>
+  <span>One of them is NOT here for the candy 👀</span>
+  <span>Only trust the CA from our official socials</span>
+  <span>Stay sus · never risk more than you can afford to lose</span>
+  <span>hallowpeen.com</span>
+  <span>🎃 AYO SUSSSSS!</span>
+  <span>🎬 Animated show · always on</span>
+  <span>Every real $HPEEN buy moves a new crewmate in</span>
+  <span>One of them is NOT here for the candy 👀</span>
+  <span>Only trust the CA from our official socials</span>
+  <span>Stay sus · never risk more than you can afford to lose</span>
+  <span>hallowpeen.com</span>
+</div></div>
+</div>
 <section id="hostPanel" class="host" hidden>
 <h2>🎛️ Host controls</h2>
 <form id="cmdForm" class="row"><input id="cmdIn" type="text" maxlength="40" autocomplete="off" placeholder="!candy, !vent, !spawn Sussy Bob…" aria-label="Chat command"><button type="submit">Run</button></form>
@@ -34,38 +60,44 @@
 <h2 class="glow">Name a crewmate</h2>
 <form id="nameForm" class="row"><input id="nameIn" type="text" maxlength="16" autocomplete="off" placeholder="e.g. Sussy Bob" aria-label="Crewmate name"><button type="submit">🎃 Move in</button></form>
 <p id="nameOut" class="fine" aria-live="polite">2-16 letters or numbers. Keep it clean-ish, or it gets ejected.</p>
-<a id="nameShare" class="share" href="#" target="_blank" rel="noopener" hidden>𝕏 Post it so the host can add it</a>
+<a id="nameShare" class="share" href="#" target="_blank" rel="noopener" hidden>𝕏 Share your crewmate name</a>
 </section>
 <section class="info">
-<h1 class="glow">Spooky Neighborhood LIVE</h1>
-<p>The crew moved into a haunted cul-de-sac for Halloween. They carve pumpkins, hand out candy, rake leaves and light graveyard candles. One of them is NOT here for the candy. 👀</p>
+<p class="tv-badge">🎬 Animated 24/7 show · reacts to real $HPEEN buys</p>
+<h1 class="glow">24/7 HallowPeen TV</h1>
+<p>Always-on cartoon channel. The crew moved into a haunted cul-de-sac for Halloween. They carve pumpkins, hand out candy, rake leaves and light graveyard candles. One of them is NOT here for the candy. 👀</p>
 <ul>
-<li>🎃 <b>Every $HPEEN buy</b> moves a new crewmate into the neighborhood (max 25, after that buys boost the tasks bar).</li>
-<li>😈 <b>Sells</b> make the impostor faster and more likely to sabotage the lights.</li>
+<li>🎃 <b>Every real $HPEEN buy</b> moves a new crewmate into the neighborhood (max 25, after that buys boost the tasks bar).</li>
+<li>😈 <b>Real sells</b> make the impostor faster and more likely to sabotage the lights.</li>
 <li>🍬 <b>Big buys</b> trigger candy rain or the Pumpkin King parade.</li>
 <li>🚨 Bodies get reported, the crew argues, somebody gets yeeted. Tasks bar full = crew wins. Too many ghosts = impostor wins. Then it all restarts.</li>
 </ul>
-<p class="fine">Trades are read from DexScreener's public data roughly every 45 seconds, so the action can lag a bit behind the chart. Crewmates get silly random names, never wallet addresses. Nothing here is financial advice; $HPEEN is a meme coin for entertainment only. Not affiliated with or endorsed by Innersloth or Among Us; all art and sounds are original.</p>
-<details><summary>📺 Stream this on TikTok / X with OBS</summary>
-<ol>
-<li>In OBS, add a <b>Browser</b> source.</li>
-<li>URL: <code>https://hallowpeen.com/live/?obs=1</code> (add <code>&amp;sound=1</code> for sound effects, or <code>&amp;demo=1</code> to rehearse before launch).</li>
-<li>Width <b>1920</b>, height <b>1080</b> (for a vertical TikTok canvas, use 1080×1920 and the scene fits the middle, or crop it).</li>
-<li>Tick <b>Control audio via OBS</b> if you want the sounds on stream. Leave "Shutdown source when not visible" off so it keeps running.</li>
-</ol></details>
-<details><summary>💬 Chat commands (host / mods)</summary>
-<p>TikTok and X don't let a website read live chat directly, so commands come in three ways:</p>
-<ol>
-<li><b>Host panel:</b> open <code>https://hallowpeen.com/live/?host=1</code> for buttons and a command box. In the OBS source, right-click → <b>Interact</b>, then press <code>/</code> or <code>Enter</code> to type a command.</li>
-<li><b>Hotkeys</b> (OBS Interact window focused): Shift+V vent, Shift+M meeting, Shift+S sabotage, Shift+C candy, Shift+D dance, Shift+P parade, Shift+N new crewmate. Tools like TikFinity or Streamer.bot can fire these as keypress actions.</li>
-<li><b>Local WebSocket:</b> add <code>&amp;ws=ws://localhost:PORT</code>. Any local relay that broadcasts <code>!candy</code> as text, or JSON like <code>{"cmd":"!vent","user":"name"}</code>, <code>{"comment":"!dance","nickname":"name"}</code>, or <code>{"name":"Sussy Bob"}</code> (adds a name to the queue), works. Only localhost addresses are accepted.</li>
-</ol>
-<p>Commands: <code>!vent</code> (20s cooldown), <code>!meeting</code> (60s), <code>!sabotage</code> (45s), <code>!candy</code> (30s), <code>!dance</code> (15s), <code>!parade</code> (60s), <code>!spawn [name]</code> (8s).</p></details>
+<p class="fine">This is an <b>animated show</b>, not a person live-streaming. Trades are read from DexScreener's public data roughly every 45 seconds, so the action can lag a bit behind the chart. When the feed is quiet, the neighborhood just keeps doing silly Halloween tasks — no fake buys are invented. Crewmates get silly random names, never wallet addresses. Nothing here is financial advice; $HPEEN is a meme coin for entertainment only. Not affiliated with or endorsed by Innersloth or Among Us; all art and sounds are original.</p>
 <details><summary>📝 Crewmate names</summary>
-<p>Names typed into the "Name a crewmate" box get checked for bad words and slurs, length, and wallet-looking strings. On a viewer's own screen the name moves in right away. On the host's screen (<code>?host=1</code> or <code>?obs=1</code>) names wait in a queue, and each new crewmate takes the next one. There is no server, so names never leave the browser that typed them. For names that should show up for everyone, add them to the <code>NAMES</code> list at the top of <code>live/sim.js</code>.</p></details>
+<p>Names typed into the "Name a crewmate" box get checked for bad words and slurs, length, and wallet-looking strings. On your own screen the name moves in right away. There is no server, so names never leave the browser that typed them. For names that should show up for everyone, add them to the <code>NAMES</code> list at the top of <code>live/sim.js</code>.</p></details>
 <details><summary>🎆 Halloween night finale</summary>
 <p>At midnight on Oct 31 (viewer's local time), the current round ends and a giant finale round starts with a full 25-crewmate neighborhood, 2 impostors, and fireworks, followed by a "Season 1 complete" screen with stats. Preview it with <code>?finale=1</code>.</p></details>
 </section>
 </main>
+<script src="/i18n.js?v=4"></script>
 <script src="sim.js"></script>
+<script>
+(function(){
+  var titles=["Spooky Neighborhood","Tasks in Electrical (totally innocent)","Who Touched the Breaker?","Vent Cam Exclusive","Candy Corn Commercial Break","Ghosts Doing Tasks Anyway","Emergency Meeting Recap","Porch Light Duty","Impostor Stretching Segment","Pumpkin King Parade Prep"];
+  var el=document.getElementById("nowPlaying"),i=0;
+  function pick(){
+    try{
+      if(window.HPLIVE&&HPLIVE.state){
+        var s=HPLIVE.state();
+        if(s.phase==="meeting"){el.textContent="Emergency Meeting Recap";return;}
+        if(s.phase==="eject"){el.textContent="Yeet Cam";return;}
+        if(s.phase==="win"||s.phase==="season"){el.textContent="Season Recap";return;}
+        if(s.status&&/candy|parade/i.test((s.feed&&s.feed[s.feed.length-1])||"")){/* keep cycling */}
+      }
+    }catch(e){}
+    el.textContent=titles[i%titles.length];i++;
+  }
+  if(el){setInterval(pick,12000);}
+})();
+</script>
 </body></html>
