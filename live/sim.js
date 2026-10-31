@@ -569,7 +569,7 @@ if(HOST){addEventListener('keydown',e=>{const tag=(e.target&&e.target.tagName)||
   ws.onclose=()=>{if(tries++<30)setTimeout(go,Math.min(30000,2000*tries));};ws.onerror=()=>{};}
  go();})();
 /* trades via DexScreener public API (approximate: diffs txn counters between polls) */
-let CA=(qs.get('ca')||'').trim();if(CA&&!/^[1-9A-HJ-NP-Za-km-z]{32,48}$/.test(CA))CA='';
+let CA=(qs.get('ca')||'GcbPZkV2HqcztPjFVTwFquKncdUwwoZGJSJXrHXSpump').trim();if(CA&&!/^[1-9A-HJ-NP-Za-km-z]{32,48}$/.test(CA))CA='';
 let prev=null,pollTimer=null,failN=0;
 async function findCA(){if(CA)return;try{const r=await fetch('../',{cache:'no-cache'});if(!r.ok)return;const t=await r.text();const m=t.match(/const\s+CA\s*=\s*["']([1-9A-HJ-NP-Za-km-z]{32,48})["']/);if(m)CA=m[1];}catch(e){}}
 async function poll(){if(DEMO||document.hidden)return;if(!CA){S.status='Pre-launch: chill neighborhood vibes. Buys go live when $HPEEN launches';return;}
